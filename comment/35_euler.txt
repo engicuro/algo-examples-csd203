@@ -1,0 +1,54 @@
+Euler Tour and Euler Cycle (Hierholzer's Algorithm)
+=====================================================
+
+Data Structures Used:
+- A dictionary (graph) mapping each vertex to a tuple of its neighbors (adjacency list for an undirected graph).
+- A dictionary (remaining) that is a mutable copy of the graph, used to track which edges have not yet been traversed. Edges are removed from remaining as they are used.
+- A tuple (stack) used as a stack to hold the current path being explored. Push is done by concatenation; pop is done by slicing off the last element.
+- A tuple (tour) that accumulates the final Euler tour/cycle in reverse order.
+
+How the Algorithm Works:
+1. Prerequisites (degree checks):
+   - degree(graph, vertex): Returns the length of the vertex's neighbor tuple (since each undirected edge appears in both endpoints' tuples).
+   - all_even_degrees(graph): Returns True if every vertex has an even degree. This is the condition for an Euler cycle (a tour that starts and ends at the same vertex).
+   - count_odd_degree_vertices(graph): Counts how many vertices have an odd degree. An Euler tour (not necessarily a cycle) exists if exactly 0 or 2 vertices have an odd degree.
+   - euler_cycle_exists(graph): Returns True if all vertices have even degree (and the graph is assumed connected).
+   - euler_tour_exists(graph): Returns True if 0 or 2 vertices have odd degree.
+
+2. find_euler_tour(graph, start_vertex) — Hierholzer's Algorithm:
+   a. Make a copy of the graph into the remaining dictionary so the original is not modified.
+   b. Initialize the stack with the start vertex and an empty tour tuple.
+   c. Main loop (while the stack is not empty):
+      - Look at the top vertex of the stack (current = stack[-1]).
+      - If current still has unused edges (remaining[current] is non-empty):
+        * Take the last neighbor from remaining[current] (pop by slicing).
+        * Remove the reverse edge from remaining[next_vertex] (since the graph is undirected, each edge appears in both directions). This uses _tuple_remove_first() to find and remove the first occurrence of current from next_vertex's neighbor tuple.
+        * Push next_vertex onto the stack (concatenate to the end).
+      - If current has no more unused edges:
+        * Pop current from the stack and append it to the tour.
+        * This means we've exhausted all edges from this vertex; it becomes part of the final tour as we backtrack.
+   d. Reverse the tour tuple to get the correct order (since vertices were added during backtracking).
+   e. Return the tour.
+
+3. Helper: _tuple_remove_first(t, val):
+   - Returns a new tuple with the first occurrence of val removed.
+   - Iterates through the tuple, skipping the first match and keeping all other elements.
+
+Key Operations:
+- Edge removal: O(d) where d is the degree of the vertex, due to tuple slicing and _tuple_remove_first.
+- Stack push/pop: O(1) for concatenation and slicing at the end.
+- Degree check: O(1) since it's just the length of the neighbor tuple.
+- The algorithm efficiently builds the tour by walking until stuck, then splicing in side loops during backtracking.
+
+Time Complexity:
+- O(E * d) where E is the number of edges and d is the maximum degree, due to edge removal operations (tuple slicing and _tuple_remove_first).
+- In a more efficient implementation with linked lists or deques, this would be O(E).
+- The degree checks (all_even_degrees, count_odd_degree_vertices) are O(V).
+
+Space Complexity:
+- O(V + E) for the remaining dictionary and the stack/tour tuples.
+
+Use Case:
+- Finding an Euler tour or cycle in a graph where such a tour exists.
+- Applications include route planning (e.g., the Chinese Postman Problem), DNA sequence assembly, and circuit design.
+- Note: This implementation assumes the graph is connected and satisfies the degree conditions for an Euler tour/cycle.

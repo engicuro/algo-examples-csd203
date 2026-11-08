@@ -1,0 +1,43 @@
+Quick Sort
+==========
+
+Data Structures Used:
+- Tuples (immutable). The algorithm uses _tuple_swap to create new tuples with
+  elements exchanged, since tuples cannot be modified in place.
+- The algorithm operates on a portion of the tuple defined by low and high
+  indices, partitioning and recursing on sub-ranges.
+
+How the Algorithm Works (Step by Step):
+1. Choose a pivot element. In this implementation, the pivot is always the last
+   element of the current sub-array (arr[high]).
+2. Partition the sub-array so that all elements less than or equal to the pivot
+   are moved to its left, and all elements greater than the pivot are moved to
+   its right.
+   - Maintain an index i that tracks the boundary of the "smaller than pivot"
+     region.
+   - Scan through the sub-array with index j. Whenever arr[j] <= pivot,
+     increment i and swap arr[i] with arr[j].
+   - After scanning, swap the pivot (arr[high]) with arr[i+1] so the pivot
+     lands in its correct final position.
+3. Recursively apply quick sort to the left sub-array (elements before the
+   pivot) and the right sub-array (elements after the pivot).
+4. The recursion base case is when the sub-array has zero or one element
+   (low >= high).
+5. Print the tuple after each partition step so the progress is visible.
+
+Key Operations:
+- Comparisons: each time an element is compared to the pivot during partitioning.
+- Swaps: each time two elements are exchanged to maintain the partition invariant.
+- The pivot is placed in its final sorted position during each partition call.
+
+Time Complexity:
+- Best case: O(n log n) — when the pivot consistently divides the array into
+  two roughly equal halves.
+- Worst case: O(n^2) — when the pivot is always the smallest or largest element
+  (e.g., already sorted data with the last element as pivot).
+- Average case: O(n log n).
+
+Space Complexity:
+- O(n) — because tuples are immutable, each swap creates a new tuple.
+- Additionally, O(log n) to O(n) stack space is used for recursion, depending
+  on the depth of the call tree.

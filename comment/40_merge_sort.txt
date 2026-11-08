@@ -1,0 +1,42 @@
+Merge Sort
+==========
+
+Data Structures Used:
+- Tuples (immutable). The algorithm creates new tuples at every merge step by
+  concatenating elements into a result tuple. No in-place modification is
+  possible because tuples are immutable.
+- Two sub-tuples (left and right) are created by slicing the original tuple at
+  the midpoint.
+
+How the Algorithm Works (Step by Step):
+1. Divide: Split the tuple into two halves at the midpoint (len(arr) // 2).
+   The left half is arr[:mid] and the right half is arr[mid:].
+2. Conquer: Recursively sort each half by applying merge sort to them.
+   The base case is a tuple of length 0 or 1, which is already sorted.
+3. Combine (Merge): Merge the two sorted halves into a single sorted tuple.
+   - Use two indices, i for the left half and j for the right half.
+   - Compare left[i] and right[j]. Append the smaller element to the result
+     tuple and advance the corresponding index.
+   - If elements are equal, the left element is taken first (stable sort).
+   - After one half is exhausted, append all remaining elements from the other
+     half to the result.
+4. Print the tuple at each split and merge step so the progress is visible.
+
+Key Operations:
+- Comparisons: each time two elements from the left and right halves are
+  compared during the merge step.
+- Moves/Appends: each time an element is added to the result tuple during
+  merging. (The code counts "swaps" as moves from the right half.)
+- The splitting and merging process builds the sorted tuple bottom-up.
+
+Time Complexity:
+- Best case: O(n log n) — the array is always divided in half and merged.
+- Worst case: O(n log n) — the same divide-and-conquer behavior regardless of
+  input order.
+- Average case: O(n log n).
+
+Space Complexity:
+- O(n) — because tuples are immutable, new tuples are created at every merge
+  step. The total extra space for the result tuples at any level of recursion
+  is proportional to n.
+- O(log n) additional stack space for the recursion depth.

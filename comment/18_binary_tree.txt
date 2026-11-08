@@ -1,0 +1,69 @@
+18_binary_tree.py - Mechanism Explanation
+
+Data Structures Used:
+- A Node class representing a binary tree node. Each node stores:
+  - value: the data held by the node.
+  - left: reference to the left child Node (or None if no left child).
+  - right: reference to the right child Node (or None if no right child).
+- A tuple used as a queue for level-order traversal (with a front index pointer to avoid O(n) pop(0)).
+
+Algorithm Overview:
+A binary tree is a tree where each node has at most two children (left and right). This file implements three depth-first traversals (inorder, preorder, postorder) and one breadth-first traversal (level-order), plus a rotated pretty-print helper.
+
+Step-by-Step Mechanism:
+
+1. Node Creation (Node class):
+   - __init__(self, value): stores the value and initializes left and right to None.
+
+2. Inorder Traversal (inorder):
+   - Base case: if node is None, return.
+   - Step 1: Recursively traverse the left subtree (inorder(node.left)).
+   - Step 2: Process (print) the current node's value.
+   - Step 3: Recursively traverse the right subtree (inorder(node.right)).
+   - For a binary search tree, this visits nodes in ascending sorted order.
+
+3. Preorder Traversal (preorder):
+   - Base case: if node is None, return.
+   - Step 1: Process (print) the current node's value.
+   - Step 2: Recursively traverse the left subtree (preorder(node.left)).
+   - Step 3: Recursively traverse the right subtree (preorder(node.right)).
+   - Root is visited first, then left subtree, then right subtree.
+
+4. Postorder Traversal (postorder):
+   - Base case: if node is None, return.
+   - Step 1: Recursively traverse the left subtree (postorder(node.left)).
+   - Step 2: Recursively traverse the right subtree (postorder(node.right)).
+   - Step 3: Process (print) the current node's value.
+   - Root is visited last, after both subtrees.
+
+5. Level-Order Traversal (level_order):
+   - Base case: if root is None, return.
+   - Initialize a "queue" as a tuple containing only the root node: queue = (root,).
+   - Initialize a front index pointer at 0.
+   - While front < len(queue):
+     a. Dequeue: current = queue[front]; front += 1.
+     b. Process (print) current.value.
+     c. If current.left is not None, append it to queue: queue = queue + (current.left,).
+     d. If current.right is not None, append it to queue: queue = queue + (current.right,).
+   - Uses a tuple with an index pointer instead of list.pop(0) to avoid O(n) dequeue cost.
+   - Visits nodes level by level, top to bottom, left to right.
+
+6. Pretty Print (print_tree):
+   - Prints the binary tree rotated 90 degrees for easy visualization.
+   - Recursively prints the right subtree first (appears on top), then the current node, then the left subtree (appears on bottom).
+   - Uses indentation and connector symbols (┌──, └──, │   ) to show structure.
+
+Key Operations:
+- Recursive depth-first traversals with three different visit orders (left-root-right, root-left-right, left-right-root).
+- Tuple-based queue with index pointer for O(1) dequeue amortized.
+- Tuple concatenation for enqueueing children.
+- Rotated tree printing using recursive right-first traversal with prefix tracking.
+
+Time Complexity:
+- All traversals (inorder, preorder, postorder, level-order): O(n) — each node is visited exactly once.
+- level_order enqueue operations: O(n) total, though tuple concatenation creates new tuples each time.
+
+Space Complexity:
+- O(n) for the queue in level-order (worst case, the last level of a complete binary tree has ~n/2 nodes).
+- O(h) for recursive DFS traversals, where h is the height of the tree (call stack depth).
+- O(n) overall for storing all nodes.

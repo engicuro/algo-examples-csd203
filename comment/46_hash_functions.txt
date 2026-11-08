@@ -1,0 +1,76 @@
+Hash Functions
+==============
+
+A hash function maps keys to bucket indices in a hash table.
+Good hash functions spread keys evenly across buckets to
+minimize collisions.
+
+This file explains two common hash functions demonstrated
+in 46_hash_functions.py.
+
+1. Division Method
+------------------
+Formula: h(key) = key % table_size
+
+Mechanism:
+- Takes the remainder when dividing the key by the table size.
+- The result is the bucket index where the key will be stored.
+- Works best when the table size is a prime number (not close
+  to a power of 2), because prime sizes help spread keys more
+  evenly across buckets.
+- If the table size shares a common factor with the keys,
+  collisions increase dramatically (e.g., all multiples of 10
+  with table_size=10 all map to bucket 0).
+
+Data structures used:
+- A tuple of tuples representing the hash table, where each
+  inner tuple holds the keys that hashed to that bucket.
+
+Key operations:
+- Compute index: key % table_size
+- Insert key into the bucket at that index
+- Count collisions: number of keys sharing a bucket minus 1
+
+Time complexity:
+- Hash computation: O(1)
+- Insert/search/delete (with chaining): O(1) average, O(n) worst
+  case when all keys collide in one bucket.
+
+Space complexity:
+- O(table_size + n) where n is the number of keys stored.
+
+2. Multiplication Method
+------------------------
+Formula: h(key) = floor(table_size * ((key * A) % 1))
+
+Mechanism:
+- Multiplies the key by a constant A (between 0 and 1).
+- Extracts the fractional part of the product.
+- Scales the fractional part by the table size to get a bucket index.
+- Knuth recommends A = (sqrt(5) - 1) / 2 ≈ 0.6180339887
+  (the golden ratio conjugate), which tends to produce
+  well-distributed hashes regardless of the table size.
+- Less sensitive to the choice of table size compared to
+  the division method.
+
+Data structures used:
+- Same tuple-of-tuples structure as the division method.
+
+Key operations:
+- Multiply key by constant A
+- Extract fractional part: product - floor(product)
+- Scale to bucket index: floor(table_size * fractional_part)
+
+Time complexity:
+- Hash computation: O(1)
+- Overall operations same as division method.
+
+Space complexity:
+- O(table_size + n)
+
+Comparison:
+- Division method is simpler but more sensitive to table size
+  and key patterns.
+- Multiplication method distributes keys more uniformly and is
+  less affected by the table size choice, but involves floating-
+  point arithmetic which is slightly more expensive.

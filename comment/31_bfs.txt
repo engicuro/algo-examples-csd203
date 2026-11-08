@@ -1,0 +1,44 @@
+Breadth-First Search (BFS)
+===========================
+
+Data Structures Used:
+- A dictionary (graph) mapping each vertex to a tuple of its neighbors (adjacency list).
+- A set (visited) to track which vertices have already been discovered.
+- A tuple (queue) used as a FIFO queue to hold vertices that have been discovered but not yet explored.
+- A dictionary (parent) in the shortest-path variant to record how we reached each vertex, enabling path reconstruction.
+
+How the Algorithm Works:
+1. bfs_traversal(graph, start):
+   - Initializes an empty visited set and an empty queue tuple.
+   - Marks the start vertex as visited and adds it to the queue.
+   - While the queue is not empty:
+     a. Removes the first vertex from the front of the queue (FIFO order).
+     b. Records this vertex in the result tuple.
+     c. Iterates over all neighbors of the current vertex. For each unvisited neighbor, marks it as visited and appends it to the end of the queue.
+   - Returns the result tuple containing vertices in BFS visit order.
+
+2. bfs_shortest_path(graph, start, goal):
+   - Same BFS structure as bfs_traversal, but also maintains a parent dictionary.
+   - When a neighbor is first discovered, its parent is recorded as the current vertex.
+   - When the goal vertex is reached, the algorithm reconstructs the path by walking backwards from the goal to the start using the parent dictionary, then reverses the path.
+   - Because BFS explores vertices level by level, the first time it reaches the goal, it has found the shortest path (fewest edges) in an unweighted graph.
+   - Returns the path as a tuple of vertices, or an empty tuple if no path exists.
+
+Key Operations:
+- Queue operations: appending to the end (tuple concatenation) and removing from the front (tuple slicing), both O(n).
+- Marking visited: O(1) set addition.
+- Checking visited: O(1) set membership test.
+- Neighbor exploration: O(d) where d is the degree of the current vertex.
+- Path reconstruction: O(L) where L is the path length, by walking the parent dictionary backwards.
+
+Time Complexity:
+- O(V + E) where V is the number of vertices and E is the number of edges. Each vertex is enqueued and dequeued once, and each edge is examined once.
+- Note: In this implementation, queue operations (tuple slicing) are O(V) each, making the overall worst-case O(V^2 + E). Using a proper queue data structure would restore O(V + E).
+
+Space Complexity:
+- O(V) for the visited set, queue, and parent dictionary.
+
+Use Case:
+- Level-by-level graph traversal.
+- Finding the shortest path in an unweighted graph.
+- Peer-to-peer network exploration, social network distance calculations, and web crawling.

@@ -1,0 +1,49 @@
+Heap Sort
+=========
+
+Data Structures Used:
+- Tuples (immutable). The algorithm uses _tuple_swap and _tuple_set helper
+  functions to create new tuples with elements swapped or replaced, since
+  tuples cannot be modified in place.
+- The algorithm treats the tuple as an implicit binary heap stored in array
+  form. For a node at index i, its left child is at 2*i+1 and its right child
+  is at 2*i+2.
+
+How the Algorithm Works (Step by Step):
+1. Build a Max Heap:
+   - Start from the last non-leaf node (index n//2 - 1) and work backward to
+     the root (index 0).
+   - For each node, "sift it down" to its correct position in the heap so
+     that every parent is greater than or equal to its children (max-heap
+     property).
+   - This is done by comparing the node with its left and right children,
+     swapping with the larger child if necessary, and repeating recursively
+     for the affected subtree.
+2. Extract Maximum Elements:
+   - The largest element is at the root (index 0) of the max heap.
+   - Swap the root with the last element of the current heap (the element at
+     index i, which shrinks from n-1 down to 1).
+   - After each swap, the extracted maximum is in its final sorted position
+     at the end of the tuple.
+   - Reduce the heap size by one and "heapify" the new root to restore the
+     max-heap property on the reduced heap.
+3. Print the tuple after each extraction so the progress is visible.
+
+Key Operations:
+- Comparisons: each time a node is compared with its children during
+  heapify/sift-down.
+- Swaps: each time two elements are exchanged during heapify or during root
+  extraction.
+- The heapify operation ensures the subtree rooted at a given index satisfies
+  the max-heap property (parent >= children).
+
+Time Complexity:
+- Best case: O(n log n) — building the heap is O(n) and each of the n-1
+  extractions requires O(log n) heapify operations.
+- Worst case: O(n log n) — the same behavior regardless of input order.
+- Average case: O(n log n).
+
+Space Complexity:
+- O(n) — because tuples are immutable, each swap creates a new tuple.
+  The algorithm does not sort in place.
+- O(log n) stack space for the recursive heapify calls.

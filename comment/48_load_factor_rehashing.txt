@@ -1,0 +1,74 @@
+Load Factor and Rehashing
+==========================
+
+Load factor measures how full a hash table is:
+  load_factor = number_of_items / table_size
+
+When the load factor gets too high, collisions increase and
+operations slow down. The solution is to **rehash**: create a
+larger table and move all existing items into it.
+
+A common rule of thumb: rehash when load factor exceeds 0.7.
+The new table size is usually doubled.
+
+This file explains the mechanism demonstrated in
+48_load_factor_rehashing.py.
+
+Mechanism
+---------
+1. Inserting items and watching the load factor grow.
+   - Each insertion adds a (key, value) pair to the hash table
+     using chaining (tuple of tuples).
+   - After each insertion, the load factor is computed as
+     count / table_size.
+
+2. Triggering a rehash when the threshold is exceeded.
+   - When the load factor exceeds 0.7, the table is considered
+     too full.
+   - A new table is created with double the size.
+   - All existing items are re-inserted into the new table
+     using the same hash function (key % new_table_size).
+   - Because the table size changed, keys that previously
+     collided may now map to different buckets, reducing
+     collisions.
+
+3. Comparing the table state before and after rehashing.
+   - Before rehashing: high load factor, many collisions,
+     long chains in buckets.
+   - After rehashing: lower load factor, fewer collisions,
+     shorter chains.
+
+Data structures used:
+- Hash table implemented as a tuple of tuples (chaining).
+  Each inner tuple holds (key, value) pairs for that bucket.
+- The hash function uses the division method: key % table_size.
+
+Key operations:
+- Hash computation: key % table_size
+- Insert: append (key, value) to the appropriate bucket
+- Search: linear scan of the bucket for the key
+- Rehash: create new larger table, iterate all old buckets,
+  re-insert every (key, value) pair into the new table
+
+Time complexity:
+- Normal insert/search/delete: O(1) average, O(n) worst case
+- Rehashing: O(n) where n is the number of items (must
+  re-insert every item)
+- Amortized cost per operation: O(1) because rehashing
+  happens rarely (only when load factor exceeds threshold)
+
+Space complexity:
+- O(n + m) where n is the number of items and m is the table size.
+- During rehashing, both old and new tables exist temporarily,
+  so peak space is O(n + 2m).
+
+Why rehashing matters:
+- Low load factor (< 0.5): few collisions, fast operations,
+  but wastes memory.
+- High load factor (> 0.7): many collisions, slow operations,
+  saves memory.
+- Rehashing keeps the load factor in a healthy range,
+  maintaining O(1) average-time operations.
+
+The trade-off: rehashing is expensive (O(n)) but happens
+infrequently, so the average cost per operation stays O(1).

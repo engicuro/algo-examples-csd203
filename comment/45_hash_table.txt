@@ -1,0 +1,70 @@
+Hash Table (with Chaining)
+===========================
+
+Data Structures Used:
+- Tuples (immutable). The hash table is implemented as a tuple of tuples.
+  The outer tuple represents the array of buckets. Each inner tuple
+  represents a bucket that holds zero or more (key, value) pairs.
+- Each bucket is a tuple of (key, value) tuples, allowing multiple entries
+  to coexist in the same bucket when collisions occur (chaining).
+
+How the Algorithm Works (Step by Step):
+
+1. Hash Function (simple_hash):
+   - Uses the division method: hash(key) = key % table_size.
+   - Returns a bucket index in the range [0, table_size - 1].
+
+2. Create Table (create_table):
+   - Creates a tuple of `size` empty tuples, one for each bucket.
+   - Each bucket starts as an empty tuple () that will hold (key, value) pairs.
+
+3. Insert (insert):
+   - Compute the bucket index using the hash function.
+   - Retrieve the bucket at that index.
+   - Search the bucket for an existing entry with the same key:
+     - If found, update the value by creating a new bucket tuple with the
+       (key, value) pair replaced at the correct position.
+     - If not found, append a new (key, value) pair to the bucket tuple.
+   - Reconstruct the outer table tuple with the updated bucket.
+
+4. Search (search):
+   - Compute the bucket index using the hash function.
+   - Retrieve the bucket at that index.
+   - Linear scan through the bucket looking for a (key, value) pair where
+     the key matches the search key.
+   - Return the associated value if found, or None if not found.
+
+5. Delete (delete):
+   - Compute the bucket index using the hash function.
+   - Retrieve the bucket at that index.
+   - Linear scan through the bucket looking for a (key, value) pair where
+     the key matches the target key.
+   - If found, remove the pair by creating a new bucket tuple without that
+     entry, and reconstruct the outer table tuple with the updated bucket.
+   - Return True if the key was found and removed, False otherwise.
+
+6. Print Table (print_table):
+   - Iterate through all bucket indices and print the contents of any
+     non-empty bucket.
+
+Key Operations:
+- Hashing: maps a key to a bucket index using the modulo operation.
+- Collision Resolution: uses chaining — each bucket holds a tuple of all
+  (key, value) pairs that hash to that bucket. When collisions occur, new
+  pairs are appended to the bucket's tuple.
+- Tuple Reconstruction: because tuples are immutable, every insert, update,
+  or delete operation creates new tuples for both the affected bucket and
+  the outer table.
+
+Time Complexity:
+- Average case: O(1) for insert, search, and delete — assuming a good hash
+  function that distributes keys uniformly across buckets.
+- Worst case: O(n) for insert, search, and delete — when all keys hash to
+  the same bucket, degrading to a linear scan of a single bucket containing
+  all n elements.
+
+Space Complexity:
+- O(n + table_size) — where n is the number of stored key-value pairs and
+  table_size is the number of buckets. Each bucket is a tuple, and the
+  outer table is a tuple of table_size buckets. Because tuples are immutable,
+  each modification creates new tuples.

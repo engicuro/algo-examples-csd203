@@ -1,0 +1,55 @@
+Edge List Representation of a Graph
+
+Data Structures Used:
+- A graph is represented as a single tuple of edges (an "edge list").
+- Each edge is a three-element tuple: (from_vertex, to_vertex, weight).
+- The weight defaults to 1 if not specified (unweighted graph).
+- All operations use tuple concatenation (immutable) — no lists are used.
+
+How the Algorithm Works:
+
+1. ADD EDGE:
+   - Creates a new edge tuple: (from_vertex, to_vertex, weight).
+   - Returns a new tuple that is the original edge_list concatenated with the new edge tuple.
+   - Since tuples are immutable, this creates a new tuple each time rather than modifying in place.
+
+2. DISPLAY EDGES:
+   - Iterates over every edge in the edge list.
+   - For each edge, unpacks it into from_vertex, to_vertex, and weight.
+   - Prints each edge in the format: from_vertex -> to_vertex (weight: W).
+
+3. GET NEIGHBORS:
+   - Takes an edge list and a target vertex.
+   - Iterates over all edges and collects all to_vertex values where from_vertex matches the target vertex.
+   - Returns a tuple of neighboring vertices (vertices reachable by an outgoing edge from the target).
+   - This represents the outgoing adjacency of the vertex.
+
+4. HAS EDGE:
+   - Iterates over all edges and checks if any edge has the given from_vertex and to_vertex.
+   - Returns True if found, False otherwise.
+   - This checks for the existence of a directed edge.
+
+5. COUNT EDGES:
+   - Simply returns len(edge_list) — the total number of edges in the tuple.
+
+6. GET ALL VERTICES:
+   - Iterates over all edges and collects every unique vertex that appears as either from_vertex or to_vertex.
+   - Uses tuple concatenation and "not in" checks to avoid duplicates.
+   - Returns a tuple of all unique vertices.
+
+Key Operations and Complexity:
+- add_edge: O(1) time (tuple concatenation creates a new tuple, but the operation itself is constant time in terms of algorithmic steps).
+- display_edges: O(E) time where E is the number of edges.
+- get_neighbors: O(E) time — must scan all edges to find those originating from the given vertex.
+- has_edge: O(E) time — must scan all edges to find a match.
+- count_edges: O(1) time (len of tuple).
+- get_all_vertices: O(E * V) time in the worst case — for each edge, we check if each vertex is already in the result tuple (O(V) per check).
+
+Space Complexity:
+- O(E) for storing the edge list, where E is the number of edges.
+- O(V) additional space for get_all_vertices result, where V is the number of vertices.
+
+Comparison with Adjacency List (dict-based):
+- Edge list is simpler to implement but less efficient for neighbor lookups and edge existence checks (both O(E) vs O(degree) for adjacency list).
+- Edge list is useful when you need to iterate over all edges (e.g., in Kruskal's algorithm for minimum spanning trees).
+- Edge list uses O(E) space, while adjacency list uses O(V + E) space.

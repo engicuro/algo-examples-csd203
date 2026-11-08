@@ -1,0 +1,51 @@
+Radix Sort (Least Significant Digit - LSD)
+===========================================
+
+Data Structures Used:
+- Tuples (immutable). The algorithm uses _tuple_set to create new tuples with
+  elements set at a given index, since tuples cannot be modified in place.
+- An output tuple of the same length as the input, used to hold intermediate
+  sorted results.
+- A count tuple of size 10 (for digits 0-9), used as a counting sort
+  subroutine for each digit position.
+
+How the Algorithm Works (Step by Step):
+1. Find the Maximum Value: Scan the input tuple to find the largest element.
+   This determines how many digit positions need to be processed (the number
+   of digits in max_val).
+2. Process Each Digit Position (from least significant to most significant):
+   - Start with exp = 1 (ones place), then exp = 10 (tens place), exp = 100
+     (hundreds place), and so on until exp exceeds max_val.
+   - For each digit position, perform a counting sort on that digit:
+     a. Count Phase: Count how many times each digit (0-9) appears at the
+        current position across all elements. This is stored in the count tuple.
+     b. Cumulative Count Phase: Transform the count tuple so that each
+        position contains the actual index in the output where the next
+        element with that digit should be placed.
+     c. Build Output Phase: Iterate through the input tuple backward
+        (to maintain stability). For each element, extract its digit at the
+        current position, place it in the output tuple at the position
+        indicated by the count, and decrement the count.
+   - Replace the input tuple with the output tuple for the next pass.
+   - Print the tuple after each pass so the progress is visible.
+
+Key Operations:
+- Digit Extraction: (arr[i] // exp) % 10 extracts the digit at the current
+  position for each element.
+- Counting Sort Subroutine: This is the stable sorting subroutine that
+  processes one digit position at a time. Stability is crucial because it
+  preserves the relative order of elements with equal digits from previous
+  passes.
+- The algorithm does not compare elements directly; it sorts by processing
+  individual digit positions.
+
+Time Complexity:
+- O(d * (n + k)) — where d is the number of digits in the maximum value,
+  n is the number of elements, and k is the range of each digit (10 for
+  decimal digits).
+- Best, worst, and average cases are all O(d * (n + k)) because the algorithm
+  always processes every digit position the same way regardless of input order.
+
+Space Complexity:
+- O(n + k) — the output tuple of size n and the count tuple of size k (10).
+  Because tuples are immutable, new tuples are created at each pass.

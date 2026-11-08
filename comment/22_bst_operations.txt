@@ -1,0 +1,55 @@
+BST Operations: Min, Max, Successor, Predecessor, Validate
+
+Data Structures Used:
+- A Node class with three fields: value, left (pointer to left child), and right (pointer to right child).
+- The BST is represented by a reference to the root node.
+- The BST ordering property is assumed: left subtree values < node value < right subtree values.
+
+How the Algorithm Works:
+
+1. FIND MINIMUM:
+   - The smallest value in a BST is always the leftmost node.
+   - Start at the root and repeatedly follow the left child pointer until there is no left child.
+   - Return the node at that position.
+   - Time complexity: O(h) where h is the height of the tree.
+
+2. FIND MAXIMUM:
+   - The largest value in a BST is always the rightmost node.
+   - Start at the root and repeatedly follow the right child pointer until there is no right child.
+   - Return the node at that position.
+   - Time complexity: O(h).
+
+3. FIND SUCCESSOR (inorder successor — the next larger value):
+   - Two cases are handled:
+     a) The node has a right subtree: the successor is the smallest value in the right subtree (go right once, then keep going left). This is found using find_min on the right child.
+     b) The node has NO right subtree: the successor is one of the ancestors. During the search for the node, we track the last node where we turned left (i.e., the last ancestor that is larger than the target). That ancestor is the successor.
+   - The algorithm uses an iterative search from the root, maintaining a "successor" candidate. When we go left (current value > target), the current node is a potential successor. When we go right (current value < target), we discard the current node as a candidate. When we find the node:
+     - If it has a right subtree, return find_min of that subtree.
+     - Otherwise, return the tracked successor candidate.
+   - Time complexity: O(h).
+
+4. FIND PREDECESSOR (inorder predecessor — the next smaller value):
+   - Mirrors the successor logic:
+     a) The node has a left subtree: the predecessor is the largest value in the left subtree (go left once, then keep going right). This is found using find_max on the left child.
+     b) The node has NO left subtree: the predecessor is one of the ancestors. During the search, track the last node where we turned right (i.e., the last ancestor that is smaller than the target). That ancestor is the predecessor.
+   - Time complexity: O(h).
+
+5. VALIDATE BST:
+   - The idea is that every node must fall within a valid range determined by its ancestors.
+   - The root has no bounds (min_val=None, max_val=None).
+   - When recursing into the left subtree, the node's value becomes the new upper bound (max_val = node.value). All values in the left subtree must be strictly less than this.
+   - When recursing into the right subtree, the node's value becomes the new lower bound (min_val = node.value). All values in the right subtree must be strictly greater than this.
+   - At each node, check: if node.value <= min_val (when min_val is not None), return False. If node.value >= max_val (when max_val is not None), return False.
+   - Recursively validate both left and right subtrees. Both must be valid for the whole tree to be valid.
+   - Time complexity: O(n) — visits every node once. Space complexity: O(h) for recursion stack.
+
+Key Operations Summary:
+- find_min: O(h) time, O(1) space (iterative).
+- find_max: O(h) time, O(1) space (iterative).
+- find_successor: O(h) time, O(1) space (iterative).
+- find_predecessor: O(h) time, O(1) space (iterative).
+- is_valid_bst: O(n) time, O(h) space (recursive).
+
+Space Complexity:
+- O(h) for the recursion stack in validate_bst, where h is the height of the tree. O(n) worst case, O(log n) average case.
+- The other operations (min, max, successor, predecessor) use O(1) extra space as they are iterative.

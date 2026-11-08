@@ -1,0 +1,70 @@
+06_queue.py — Queue Implementation (FIFO)
+==========================================
+
+Data Structures Used:
+- Python tuples (immutable ordered sequences) are used to implement the queue.
+- No Python lists, no external libraries. The queue is a tuple where the leftmost element
+  is the "front" (next to be dequeued) and the rightmost element is the "rear" (most recently
+  enqueued).
+
+How the Algorithm Works (Step by Step):
+
+Core Queue Operations (all built on tuples):
+
+1. queue_create(): Returns an empty tuple (). This is the initial empty queue.
+
+2. queue_enqueue(q, item):
+   - Adds an item to the rear (back) of the queue.
+   - Creates a new tuple by concatenating the old tuple with (item,). The new item becomes
+     the last (rightmost) element.
+   - Time: O(n) — all existing elements must be copied into the new tuple.
+
+3. queue_dequeue(q):
+   - Removes and returns the front item (the first element of the tuple).
+   - Returns (None, q) if the queue is empty.
+   - Uses q[0] to get the front element and q[1:] to get the remaining queue.
+   - Time: O(n) — slicing creates a new tuple copying all but the first element.
+
+4. queue_peek(q):
+   - Returns the front item without removing it (q[0]).
+   - Returns None if the queue is empty.
+   - Time: O(1).
+
+5. queue_is_empty(q):
+   - Returns True if len(q) == 0.
+   - Time: O(1).
+
+6. queue_size(q):
+   - Returns len(q).
+   - Time: O(1).
+
+Example 1 — Hot-Potato Elimination Game (hot_potato):
+- Simulates a children's game where players stand in a circle and pass a "potato" a fixed
+  number of times before the holder is eliminated.
+- Algorithm:
+  a. Enqueue all player names into the queue.
+  b. Each round, pass the potato by dequeuing the front player and enqueuing them at the
+     rear, repeated 'num' times.
+  c. After 'num' passes, the player at the front of the queue is eliminated (dequeued and
+     removed from the game).
+  d. Repeat until only one player remains — that player is the winner.
+- Time: O(n * m * k) where n is the number of players, m is the number of rounds, and k
+  is the number of passes per round. Each enqueue/dequeue is O(n) due to tuple copying.
+- Space: O(n) for the queue.
+
+Example 2 — Print Job Queue (print_queue_demo):
+- Simulates a printer processing jobs in FIFO order.
+- All print jobs (document name, page count) are enqueued.
+- Jobs are then dequeued and processed one at a time in the order they were submitted.
+- Time: O(n^2) overall due to tuple copying on each enqueue/dequeue.
+- Space: O(n) for the queue.
+
+Key Operations Summary:
+- Enqueue: O(n) due to tuple immutability
+- Dequeue: O(n) due to tuple slicing
+- Peek: O(1)
+- Is Empty: O(1)
+- Size: O(1)
+
+Time Complexity: O(n) for enqueue/dequeue (tuple copy); O(n) for game simulation
+Space Complexity: O(n) for the tuple storage

@@ -1,0 +1,143 @@
+Collision Handling Strategies
+==============================
+
+A collision occurs when two different keys hash to the same
+bucket index. This file explains three strategies for
+handling collisions demonstrated in 47_collision_handling.py.
+
+1. Chaining
+-----------
+Mechanism:
+- Each bucket holds a collection (tuple of tuples) of all
+  (key, value) pairs that hash to that bucket.
+- When inserting, compute the bucket index and append the
+  pair to that bucket's collection.
+- When searching, compute the bucket index and linearly scan
+  the collection for the key.
+- When deleting, compute the bucket index, find the key in
+  the collection, and remove it.
+- If the key already exists in the bucket, update its value
+  instead of inserting a duplicate.
+
+Data structures used:
+- Hash table is a tuple of tuples. Each inner tuple holds
+  (key, value) pairs that hashed to that bucket.
+- Uses immutable tuples, so insertions and deletions create
+  new tuples via concatenation and slicing.
+
+Key operations:
+- Hash: key % table_size
+- Insert: append (key, value) to bucket tuple
+- Search: linear scan of bucket tuple
+- Delete: remove element from bucket tuple
+
+Time complexity:
+- Best case O(1) for all operations (short chains)
+- Worst case O(n) when all keys collide in one bucket
+- Average case O(1 + α) where α = n/m (load factor)
+
+Space complexity:
+- O(n + m) where n is the number of items and m is the table size.
+
+Pros:
+- Simple to implement
+- Never fills up (as long as there's memory)
+- No clustering issues
+
+Cons:
+- Uses extra memory for tuple pointers
+- Cache-unfriendly (items scattered in memory)
+
+2. Linear Probing
+-----------------
+Mechanism:
+- Store items directly in the hash table array (no chaining).
+- When inserting, compute the bucket index. If that bucket is
+  occupied, try the next bucket (index + 1), then the next
+  (index + 2), and so on, wrapping around to the beginning
+  if needed.
+- When searching, compute the bucket index and probe
+  sequentially until finding the key or an empty slot.
+- When deleting, use a special "DELETED" marker (tombstone)
+  so that probing chains are not broken. Without tombstones,
+  a deleted entry would cause searches to stop prematurely.
+
+Data structures used:
+- A dictionary mapping bucket indices to None, (key, value)
+  tuples, or the string "DELETED" (tombstone marker).
+
+Key operations:
+- Hash: key % table_size
+- Probe: (index + 1) % table_size, (index + 2) % table_size, ...
+- Insert: find first empty or matching slot, store or update
+- Search: probe until key found or empty slot encountered
+- Delete: mark slot as "DELETED" (tombstone)
+
+Time complexity:
+- Best case O(1)
+- Worst case O(n) when table is nearly full (clustering)
+- Average case depends heavily on load factor
+
+Space complexity:
+- O(m) where m is the table size (no extra pointers needed).
+
+Pros:
+- Cache-friendly (data stored contiguously)
+- No extra pointers needed
+
+Cons:
+- Primary clustering: consecutive filled buckets form clusters
+  that slow down future insertions and searches
+- Performance degrades sharply as load factor approaches 1
+
+3. Quadratic Probing
+--------------------
+Mechanism:
+- Similar to linear probing, but the probe sequence uses
+  quadratic offsets instead of linear ones.
+- When a collision occurs, try buckets at offsets 1², 2², 3²,
+  ... (i.e., 1, 4, 9, 16, ...) from the original hash index,
+  wrapping around using modulo table_size.
+- Also uses tombstone ("DELETED") markers for deletion.
+- Includes a safety limit (max_probes = table_size) to
+  prevent infinite loops, since quadratic probing may not
+  find an empty slot even if the table isn't full
+  (secondary clustering).
+
+Data structures used:
+- A dictionary mapping bucket indices to None, (key, value)
+  tuples, or the string "DELETED".
+
+Key operations:
+- Hash: key % table_size
+- Probe: (key % table_size + i²) % table_size for i = 0, 1, 2, ...
+- Insert: find first empty or matching slot using quadratic offsets
+- Search: probe using same quadratic sequence
+- Delete: mark slot as "DELETED" (tombstone)
+
+Time complexity:
+- Best case O(1)
+- Worst case O(n) when table is nearly full
+- Average case better than linear probing for moderate load
+  factors due to reduced primary clustering
+
+Space complexity:
+- O(m) where m is the table size.
+
+Pros:
+- Reduces primary clustering compared to linear probing
+- Cache-friendly like linear probing
+
+Cons:
+- Secondary clustering: keys that hash to the same index
+  follow the same probe sequence
+- May fail to find an empty slot even if the table isn't full
+- Table size should ideally be prime for best results
+
+Comparison Summary:
+- Chaining: simplest, never fills up, but uses extra memory
+  and is cache-unfriendly.
+- Linear probing: cache-friendly, no extra pointers, but
+  suffers from primary clustering.
+- Quadratic probing: reduces primary clustering, but can fail
+  to find empty slots and suffers from secondary clustering.

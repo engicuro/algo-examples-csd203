@@ -1,0 +1,33 @@
+Adjacency List Representation of a Graph
+==========================================
+
+Data Structures Used:
+- A Python dictionary (graph) where each key is a vertex and each value is a tuple of neighboring vertices.
+- Tuples are used for neighbor collections to maintain immutability; new tuples are created via concatenation when edges are added.
+
+How the Algorithm Works:
+1. make_graph(): Returns an empty dictionary representing the graph.
+2. add_vertex(graph, vertex): Adds a vertex as a key in the dictionary with an empty tuple as its value (no neighbors yet). Only adds if the vertex does not already exist.
+3. add_edge(graph, vertex1, vertex2): Adds an undirected edge between two vertices. It first ensures both vertices exist, then appends each vertex to the other's neighbor tuple (if not already present). Since tuples are immutable, a new tuple is created by concatenation.
+4. display(graph): Iterates over all vertices and prints each vertex alongside its neighbor tuple.
+5. get_neighbors(graph, vertex): Returns the tuple of neighbors for a given vertex, or an empty tuple if the vertex is not in the graph.
+6. has_edge(graph, vertex1, vertex2): Checks whether vertex2 appears in vertex1's neighbor tuple, returning True or False.
+
+Key Operations:
+- Vertex addition: O(1) dictionary insertion.
+- Edge addition: O(n) tuple concatenation and membership check (where n is the current number of neighbors).
+- Neighbor lookup: O(1) dictionary access.
+- Edge existence check: O(n) linear scan of the neighbor tuple.
+
+Time Complexity:
+- Adding a vertex: O(1).
+- Adding an edge: O(d) where d is the degree of the vertices (due to tuple concatenation and membership check).
+- Querying neighbors: O(1) for dictionary access, O(d) to iterate.
+- Checking edge existence: O(d) linear scan of the neighbor tuple.
+
+Space Complexity:
+- O(V + E) where V is the number of vertices and E is the number of edges. Each edge is stored twice (once per endpoint) in the adjacency tuples.
+
+Use Case:
+- Efficient for sparse graphs where the number of edges is much smaller than V^2.
+- Neighbor iteration is fast (only actual neighbors are stored), unlike an adjacency matrix which must scan an entire row.

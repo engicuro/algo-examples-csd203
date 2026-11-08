@@ -1,0 +1,63 @@
+17_general_tree.py - Mechanism Explanation
+
+Data Structures Used:
+- A Node class representing a general tree (N-ary tree) node. Each node stores:
+  - value: the data held by the node.
+  - children: a tuple of child Node objects (empty tuple for leaf nodes).
+- Tuples are used for children to maintain immutability; adding a child creates a new tuple via concatenation.
+
+Algorithm Overview:
+A general tree (N-ary tree) is a tree where each node can have any number of children. This file implements basic operations on such a tree: creating nodes, adding children, computing size and height, and performing preorder and postorder traversals, plus a pretty-print helper.
+
+Step-by-Step Mechanism:
+
+1. Node Creation (Node class):
+   - __init__(self, value): stores the value and initializes children as an empty tuple ().
+
+2. Adding a Child (add_child):
+   - Creates a new Node with the given child_value.
+   - Concatenates the new node onto the parent's children tuple: parent.children = parent.children + (new_node,).
+   - Returns the new child node so the caller can keep a reference.
+
+3. Size (size):
+   - Base case: if node is None, return 0.
+   - Recursive case: start count at 1 (for the current node). For each child in node.children, recursively call size(child) and add the result to count.
+   - Returns the total count of all nodes in the subtree rooted at this node.
+
+4. Height (height):
+   - Base case 1: if node is None, return -1 (empty tree).
+   - Base case 2: if len(node.children) == 0 (leaf node), return 0.
+   - Recursive case: iterate over all children, compute height(child) for each, and track the maximum child height.
+   - Return 1 + max_child_height (the +1 accounts for the edge from this node down to the tallest child).
+
+5. Preorder Traversal (preorder):
+   - Base case: if node is None, return.
+   - Step 1: Process (print) the current node's value.
+   - Step 2: For each child in node.children (left to right), recursively call preorder(child).
+   - This visits the root before its children.
+
+6. Postorder Traversal (postorder):
+   - Base case: if node is None, return.
+   - Step 1: For each child in node.children (left to right), recursively call postorder(child).
+   - Step 2: Process (print) the current node's value.
+   - This visits the root after all its children.
+
+7. Pretty Print (print_tree):
+   - Uses prefix strings and connector symbols (├──, └──) to visualize the tree structure with indentation.
+   - Recursively prints each subtree with an updated prefix that reflects whether the node is the last child of its parent.
+
+Key Operations:
+- Tuple concatenation for adding children (immutable data structure pattern).
+- Recursive descent through children for traversal, size, and height computation.
+- Max reduction over child heights for computing tree height.
+- Prefix-based indentation for tree visualization.
+
+Time Complexity:
+- size: O(n) — visits every node exactly once.
+- height: O(n) — visits every node exactly once.
+- preorder/postorder: O(n) — visits every node exactly once.
+- add_child: O(k) where k is the current number of children (tuple concatenation creates a new tuple).
+
+Space Complexity:
+- O(h) for recursive calls, where h is the height of the tree (call stack depth).
+- O(n) overall for storing all nodes.

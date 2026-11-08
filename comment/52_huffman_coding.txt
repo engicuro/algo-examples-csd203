@@ -1,0 +1,114 @@
+Huffman Coding
+===============
+
+Huffman coding is a lossless compression algorithm that
+assigns shorter codes to more frequent characters and
+longer codes to less frequent characters.
+
+This file explains the mechanism demonstrated in
+52_huffman_coding.py.
+
+Mechanism
+---------
+The algorithm works in four main phases:
+
+Phase 1 — Count Frequencies
+----------------------------
+- Scan the input text and count how many times each character
+  appears.
+- Store the results in a dictionary mapping each character
+  to its frequency count.
+- Example: "BCCABBDDAEC" → A=2, B=3, C=2, D=2, E=1
+
+Phase 2 — Build the Huffman Tree
+---------------------------------
+The Huffman tree is a binary tree built by repeatedly
+combining the two least frequent nodes.
+
+Mechanism:
+1. Create a leaf node for each character, storing the
+   character and its frequency.
+2. Repeat until only one node remains (the root):
+   a. Find the two nodes with the smallest frequencies.
+      (The implementation uses a simple sorting approach.)
+   b. Create a new internal node with these two nodes as
+      its left and right children.
+   c. The new node's frequency is the sum of its children's
+      frequencies.
+   d. Put the new node back in the collection; remove the
+      two nodes that were combined.
+3. The last remaining node is the root of the Huffman tree.
+
+Key property: More frequent characters end up closer to the
+root (shorter codes), while less frequent characters end up
+deeper in the tree (longer codes).
+
+Data structures used:
+- HuffmanNode class with attributes: char (character or None
+  for internal nodes), freq (frequency count), left (left
+  child), right (right child).
+- A tuple of nodes that is repeatedly sorted and reduced.
+
+Phase 3 — Generate Huffman Codes
+---------------------------------
+Traverse the Huffman tree from root to each leaf to build
+binary codes:
+- Going left appends '0' to the current code.
+- Going right appends '1' to the current code.
+- When a leaf node is reached, store the code for that
+  character in a dictionary (char → code).
+- Special case: if there is only one unique character,
+  assign it the code "0".
+
+Data structures used:
+- A dictionary mapping characters to their binary code strings.
+- Recursive tree traversal (depth-first).
+
+Phase 4 — Encode and Decode
+----------------------------
+Encoding:
+- For each character in the input text, look up its Huffman
+  code in the dictionary and concatenate the codes.
+- The result is a binary string that is typically much shorter
+  than the original 8-bit ASCII representation.
+
+Decoding:
+- Start at the root of the Huffman tree.
+- For each bit in the encoded string:
+  - '0' → go to the left child.
+  - '1' → go to the right child.
+- When a leaf node is reached, output the character and
+  reset to the root for the next character.
+- Continue until all bits are processed.
+
+Data structures used:
+- The same Huffman tree used for encoding.
+- String concatenation for the encoded/decoded output.
+
+Time complexity:
+- Counting frequencies: O(n) where n = length of text.
+- Building Huffman tree: O(k²) or O(k log k) where k = number
+  of unique characters. The implementation uses a simple
+  selection sort approach (O(k²)), but a priority queue
+  (min-heap) would give O(k log k).
+- Generating codes: O(k) — visit each node once.
+- Encoding: O(n) — one lookup per character.
+- Decoding: O(n) — one tree traversal per bit.
+
+Space complexity:
+- O(k) for the Huffman tree (k leaf nodes + k-1 internal nodes).
+- O(k) for the code dictionary.
+- O(n) for the encoded output string.
+
+Key properties:
+- Prefix-free codes: no code is a prefix of another code,
+  ensuring unambiguous decoding.
+- Optimal for prefix-free codes: achieves the minimum
+  expected code length for a given set of character frequencies.
+- More frequent characters get shorter codes, less frequent
+  characters get longer codes.
+
+Applications:
+- File compression (ZIP, GZIP)
+- JPEG image compression
+- MP3 audio compression

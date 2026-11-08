@@ -1,0 +1,54 @@
+01_arrays.py — Array Basics (using tuples)
+============================================
+
+Data Structures Used:
+- Python tuples (immutable ordered sequences) are used in place of lists to represent arrays.
+- No Python list objects are used anywhere in this file.
+
+How the Algorithm Works (Step by Step):
+
+1. create_array(): Creates a tuple (10, 20, 30, 40, 50) and returns it. Tuples are ordered,
+   zero-indexed collections where each element is stored contiguously in memory.
+
+2. access_by_index(arr): Demonstrates index-based access. arr[0] returns the first element,
+   arr[1] the second, and arr[-1] the last. Indexing into a tuple is O(1) because tuples
+   store elements in contiguous memory and compute the address directly from the index.
+
+3. slice_array(arr): Demonstrates Python tuple slicing:
+   - arr[0:3] returns elements at indices 0, 1, 2 (start inclusive, end exclusive).
+   - arr[2:] returns elements from index 2 to the end.
+   - arr[::2] returns every second element (stride of 2).
+   Slicing creates a new tuple, so it is O(k) where k is the slice length.
+
+4. append_element(arr): Since tuples are immutable, "appending" creates a new tuple by
+   concatenating the old tuple with (60,). This is O(n) because all existing elements must
+   be copied into the new tuple.
+
+5. insert_element(arr): Inserts 25 at index 2 by slicing the tuple into two parts
+   (arr[:2] and arr[2:]) and concatenating them with (25,) in between. This is O(n)
+   because all elements must be copied.
+
+6. delete_element(arr): Two deletion strategies are shown:
+   - Delete by value (remove 25): Iterates through the tuple, skipping the first matching
+     element, and rebuilds a new tuple. O(n) time.
+   - Delete by index (pop at 0): Removes the first element by slicing arr[1:]. O(n) time
+     because all remaining elements are copied.
+
+7. search_linear(arr, target): Linear search that walks through every element comparing
+   it to the target. Returns the index if found, -1 otherwise. O(n) time, O(1) space.
+
+8. sort_array(arr): Bubble sort implementation. Uses nested loops — the outer loop runs n
+   times, and the inner loop compares adjacent elements and swaps them if out of order.
+   Each pass pushes the largest unsorted element to its correct position at the end.
+   Swapping is done by rebuilding the tuple with slicing. O(n^2) time, O(1) space
+   (ignoring tuple creation overhead).
+
+Key Operations Summary:
+- Indexing: O(1)
+- Slicing: O(k) where k is the slice size
+- Append/Insert/Delete: O(n) due to tuple immutability requiring full copy
+- Search: O(n)
+- Sort (Bubble Sort): O(n^2)
+
+Time Complexity: O(n^2) for sorting; O(n) for search, insert, delete
+Space Complexity: O(n) for the tuple storage; O(n) additional for any slicing operation

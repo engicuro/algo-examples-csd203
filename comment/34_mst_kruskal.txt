@@ -1,0 +1,51 @@
+Kruskal's Minimum Spanning Tree (MST) Algorithm
+=================================================
+
+Data Structures Used:
+- A tuple of edges, each represented as (weight, node_a, node_b).
+- A Union-Find (Disjoint Set Union) data structure implemented with two tuples:
+  - parent: parent[i] stores the parent of node i. If parent[i] == i, then i is a root.
+  - rank: rank[i] stores an approximate depth of the tree rooted at i, used to keep trees balanced.
+- The MST edges are stored in a tuple of (weight, node_a, node_b) tuples.
+
+How the Algorithm Works:
+1. Sorting Phase:
+   - All edges are sorted by weight in ascending order using Python's built-in sorted() function.
+   - This ensures we always consider the lightest available edge first.
+
+2. Union-Find Initialization:
+   - make_set(n): Creates parent and rank tuples for n nodes (labeled 0 to n-1). Initially, each node is its own parent (each node is its own separate group), and all ranks are 0.
+
+3. Greedy Edge Selection:
+   - Iterate through the sorted edges from smallest weight to largest.
+   - For each edge (weight, node_a, node_b):
+     a. Use find(parent, node_a) and find(parent, node_b) to determine the root of each node's group.
+        - find() follows parent links up to the root, and performs path compression by pointing visited nodes directly to the root (flattening the tree for faster future lookups).
+     b. If root_a != root_b, the two nodes are in different groups, so adding this edge will not create a cycle:
+        - Add the edge to the MST.
+        - Add the edge's weight to total_weight.
+        - Use union(parent, rank, root_a, root_b) to merge the two groups.
+          - union() attaches the shorter tree under the taller tree (union by rank) to keep the trees balanced.
+          - If ranks are equal, one root becomes the parent of the other and its rank is incremented.
+     c. If root_a == root_b, the nodes are already connected; skip this edge (adding it would create a cycle).
+
+4. Return the MST edges and total weight.
+
+Key Operations:
+- Sorting edges: O(E log E) using Python's built-in Timsort.
+- find() with path compression: Nearly O(1) amortized per call (inverse Ackermann function).
+- union() with union by rank: Nearly O(1) amortized per call.
+- The algorithm greedily picks the smallest edge that does not form a cycle, building the MST incrementally.
+
+Time Complexity:
+- O(E log E) for sorting the edges (dominant term).
+- O(E * alpha(V)) for the Union-Find operations, where alpha is the inverse Ackermann function (effectively constant for practical inputs).
+- Overall: O(E log E) or equivalently O(E log V) since E <= V^2 and log(V^2) = 2 log V.
+
+Space Complexity:
+- O(V + E) for the parent/rank tuples and the edge list.
+
+Use Case:
+- Finding a minimum spanning tree in a connected, weighted, undirected graph.
+- Particularly efficient for sparse graphs (few edges) since the sorting cost is dominated by E rather than V^2.
+- Network design, clustering, and as a subroutine in other graph algorithms.

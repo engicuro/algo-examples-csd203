@@ -1,0 +1,62 @@
+02_singly_linked_list.py — Singly Linked List
+==============================================
+
+Data Structures Used:
+- Node class: Each node stores a value and a next pointer (reference to the next Node).
+- SinglyLinkedList class: Maintains only a head pointer (self.head) pointing to the
+  first node. The last node's next pointer is None.
+
+How the Algorithm Works (Step by Step):
+
+1. Node Creation: Each Node object holds a value and a next reference. Initially, next
+   is None, meaning "no next node."
+
+2. insert_at_head(value):
+   - Create a new Node with the given value.
+   - Set new_node.next to the current head (pointing the new node to the old first node).
+   - Update self.head to new_node (the new node becomes the first node).
+   - Time: O(1) — only pointer updates, no traversal needed.
+
+3. insert_at_tail(value):
+   - Create a new Node with the given value.
+   - If the list is empty (head is None), set head to the new node.
+   - Otherwise, walk from head to the last node (the one whose next is None).
+   - Set the last node's next to the new node.
+   - Time: O(n) — must traverse the entire list to find the tail.
+
+4. delete_by_value(value):
+   - If the list is empty, print a message and return.
+   - If the head node contains the value, update head to head.next (remove the first node).
+   - Otherwise, walk through the list looking for the node whose next contains the value.
+   - When found, set current.next = current.next.next, skipping over the deleted node.
+   - If the value is not found, print a message.
+   - Time: O(n) — worst case requires traversing the entire list.
+
+5. search(value):
+   - Walk from head to tail, comparing each node's value to the target.
+   - Return True if found, False otherwise.
+   - Time: O(n).
+
+6. display():
+   - Walk from head to tail, building a string of values connected by " -> ".
+   - Append "None" at the end to show the terminator.
+   - Time: O(n).
+
+7. reverse():
+   - Uses three pointers: previous (starts None), current (starts at head), and next_node.
+   - For each node: save current.next to next_node, then reverse current.next to point
+     to previous, then advance previous and current one step forward.
+   - After the loop, set head to previous (which is now the last node visited, i.e., the
+     new first node).
+   - Time: O(n), Space: O(1).
+
+Key Operations Summary:
+- Insert at head: O(1)
+- Insert at tail: O(n)
+- Delete by value: O(n)
+- Search: O(n)
+- Display: O(n)
+- Reverse: O(n) time, O(1) space
+
+Time Complexity: O(n) for most operations except insert_at_head which is O(1)
+Space Complexity: O(n) for storing n nodes; O(1) auxiliary space for pointer manipulation

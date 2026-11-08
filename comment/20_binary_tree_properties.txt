@@ -1,0 +1,49 @@
+Binary Tree Properties
+
+Data Structures Used:
+- A Node class with three fields: value, left (pointer to left child), and right (pointer to right child).
+- The tree is represented by a reference to the root node.
+- All properties are computed using simple recursion (no auxiliary data structures).
+
+How the Algorithm Works:
+
+1. COUNT NODES:
+   - Base case: if the node is None, return 0.
+   - Recursive case: return 1 + count_nodes(left subtree) + count_nodes(right subtree).
+   - This visits every node exactly once and counts it.
+
+2. COUNT LEAVES:
+   - Base case: if the node is None, return 0.
+   - If the node has no left child and no right child, it is a leaf — return 1.
+   - Otherwise, recursively count leaves in both the left and right subtrees and return their sum.
+
+3. COUNT INTERNAL NODES:
+   - Base case: if the node is None, return 0.
+   - If the node is a leaf (both children are None), return 0 (it is not internal).
+   - Otherwise, return 1 (for this node) + count_internal(left subtree) + count_internal(right subtree).
+
+4. TREE HEIGHT:
+   - Base case: if the node is None, return -1 (an empty tree has height -1 by convention).
+   - Recursively compute the height of the left and right subtrees.
+   - The height of the current node is 1 + max(left_height, right_height).
+   - This measures the number of edges on the longest path from the root to a leaf.
+
+5. TREE DIAMETER:
+   - The diameter is the number of edges on the longest path between any two nodes in the tree.
+   - This path may or may not pass through the root.
+   - For each node, compute three possibilities:
+     a) The longest path entirely within the left subtree (left_diameter).
+     b) The longest path entirely within the right subtree (right_diameter).
+     c) The longest path that passes through this node: left_height + right_height + 2.
+   - Return the maximum of these three values.
+   - The height helper function is called at each node to compute the path-through-root value.
+
+Key Operations:
+- count_nodes(node): O(n) time, O(h) space for recursion stack (h = height of tree).
+- count_leaves(node): O(n) time, O(h) space.
+- count_internal(node): O(n) time, O(h) space.
+- tree_height(node): O(n) time, O(h) space.
+- tree_diameter(node): O(n^2) worst case in this implementation because tree_height is called at each node during the diameter computation. Each call to tree_height is O(n), and diameter visits O(n) nodes, leading to O(n^2) total.
+
+Space Complexity:
+- O(h) for the recursion stack, where h is the height of the tree. In the worst case (skewed tree), h = n, so space is O(n). In a balanced tree, h = log(n).

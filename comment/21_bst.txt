@@ -1,0 +1,48 @@
+Binary Search Tree (BST) Basics
+
+Data Structures Used:
+- A Node class with three fields: value, left (pointer to left child), and right (pointer to right child).
+- The BST is represented by a reference to the root node.
+- The BST ordering property: for every node, all values in the left subtree are less than the node's value, and all values in the right subtree are greater. No duplicate values are allowed.
+
+How the Algorithm Works:
+
+1. INSERT (recursive):
+   - Base case: if the current node is None, create a new Node with the given value and return it (this places the new node at the correct position).
+   - If the value to insert is less than the current node's value, recursively insert into the left subtree.
+   - If the value is greater, recursively insert into the right subtree.
+   - If the value equals the current node's value, do nothing (duplicates are not allowed).
+   - Return the (possibly unchanged) current node to maintain the tree structure.
+
+2. SEARCH (recursive):
+   - Base case: if the current node is None, the value is not in the tree — return False.
+   - If the current node's value matches the target, return True.
+   - If the target is less than the current node's value, recursively search the left subtree.
+   - If the target is greater, recursively search the right subtree.
+   - This leverages the BST ordering to skip half the tree at each step.
+
+3. DELETE (recursive, handling three cases):
+   - Base case: if the current node is None, the value is not found — return None.
+   - Navigate to find the node: if the value is less, recurse left; if greater, recurse right.
+   - Once the node is found, handle three cases:
+     a) Leaf node (no children): return None to the parent, effectively removing the node.
+     b) One child: return the non-None child to the parent, replacing the deleted node with its child.
+     c) Two children:
+       - Step 1: Find the inorder successor — the smallest value in the right subtree (the leftmost node of the right subtree).
+       - Step 2: Copy the successor's value into the current node.
+       - Step 3: Recursively delete the successor from the right subtree (the successor will be a leaf or have only a right child, so it reduces to Case 1 or 2).
+
+4. INORDER TRAVERSAL (recursive):
+   - Recursively traverse the left subtree.
+   - Visit (print) the current node's value.
+   - Recursively traverse the right subtree.
+   - For a BST, this visits values in sorted (ascending) order.
+
+Key Operations:
+- insert(node, value): O(h) time where h is the height of the tree. O(n) worst case (skewed tree), O(log n) average case (balanced tree).
+- search(node, value): O(h) time, same as insert.
+- delete(node, value): O(h) time, same as insert. Finding the inorder successor is O(h) as well.
+- inorder(node): O(n) time (visits every node once).
+
+Space Complexity:
+- O(h) for the recursion stack, where h is the height of the tree. O(n) worst case, O(log n) average case.

@@ -1,0 +1,43 @@
+Prim-Jarnik Minimum Spanning Tree (MST) Algorithm
+===================================================
+
+Data Structures Used:
+- A dictionary (graph) mapping each vertex to a tuple of (neighbor, weight) tuples, representing a weighted adjacency list.
+- A set (visited) to track which vertices have been added to the MST.
+- A tuple (mst_edges) to store the edges of the MST, each as a (u, v, weight) tuple.
+- A variable (total_weight) accumulating the sum of all MST edge weights.
+- math.inf is used as the initial "infinity" value for comparison when searching for the minimum-weight candidate edge.
+
+How the Algorithm Works:
+1. Start from the given start_vertex and mark it as visited.
+2. Repeat until all vertices are visited (i.e., the MST has V-1 edges):
+   a. Search phase:
+      - Iterate over all vertices currently in the visited set (the "MST so far").
+      - For each visited vertex, examine all its neighbors.
+      - For each neighbor that is NOT yet visited, compare its edge weight to the current best (minimum weight).
+      - Track the best candidate edge (the one with the smallest weight connecting a visited vertex to an unvisited vertex).
+   b. Add phase:
+      - If a valid candidate edge was found, add it to the MST tuple, add its weight to total_weight, and mark the newly reached vertex as visited.
+      - If no candidate edge was found (best_edge is None), the graph is disconnected and a spanning tree cannot be built; print a warning and break.
+
+3. Return the MST edges and total weight.
+
+Key Operations:
+- Visited set check: O(1) set membership test.
+- Candidate edge search: O(V * d) where d is the average degree, since every visited vertex's neighbors are examined.
+- Edge addition: O(1) tuple concatenation.
+- The algorithm greedily picks the cheapest edge crossing the boundary between the MST and the unvisited vertices at each step.
+
+Time Complexity:
+- O(V^2 * d) in the worst case, or more precisely O(V * E) where V is the number of vertices and E is the number of edges.
+  - The outer loop runs V-1 times (once per MST edge).
+  - Each iteration scans all visited vertices and their neighbors, which in the worst case is O(E).
+  - Total: O(V * E).
+- With a priority queue (min-heap), this can be improved to O(E log V), but this implementation uses a simple linear scan for clarity.
+
+Space Complexity:
+- O(V + E) for the graph, visited set, and MST edges storage.
+
+Use Case:
+- Finding a minimum spanning tree in a connected, weighted, undirected graph.
+- Network design (connecting all nodes with minimum total cable cost), clustering, and approximation algorithms for NP-hard problems.

@@ -1,0 +1,56 @@
+16_recursion_tail.py - Mechanism Explanation
+
+Data Structures Used:
+- An accumulator parameter (integer) to carry intermediate results forward through recursive calls.
+- A mutable dictionary {"count": 0} (in other files, not this one) — not used here.
+- Index-based traversal (integer index) instead of tuple slicing to avoid creating new tuples.
+- Tuples as the input sequence.
+
+Algorithm Overview:
+This file explains "tail recursion," where the recursive call is the LAST operation in the function (nothing remains to be computed after the call returns). It contrasts tail recursion with non-tail recursion, and shows how to convert tail-recursive functions into simple loops — which Python prefers since it does not perform tail call optimization.
+
+Step-by-Step Mechanism:
+
+1. Tail-Recursive Factorial (factorial_tail):
+   - Parameters: n (the current number) and accumulator (the running product, default 1).
+   - Base case: n <= 1 -> return the accumulated result (accumulator).
+   - Tail-recursive case: call factorial_tail(n - 1, n * accumulator).
+   - The multiplication is done BEFORE the recursive call, and the result is passed via the accumulator.
+   - Nothing is left to do after the recursive call returns — hence it is "tail" recursion.
+   - Trace: factorial_tail(5, 1) -> factorial_tail(4, 5) -> factorial_tail(3, 20) -> factorial_tail(2, 60) -> factorial_tail(1, 120) -> 120.
+
+2. Non-Tail-Recursive Factorial (factorial_non_tail):
+   - Base case: n <= 1 -> return 1.
+   - Recursive case: return n * factorial_non_tail(n - 1).
+   - The multiplication (n * ...) happens AFTER the recursive call returns, so this is NOT tail recursion.
+   - The call stack must retain each frame to perform the multiplication during unwinding.
+
+3. Factorial Loop (factorial_loop):
+   - Converts the tail-recursive factorial into a while loop.
+   - Uses an accumulator variable and a current counter.
+   - Loop condition: while current > 1, multiply accumulator by current and decrement current.
+   - This uses constant stack space (no recursion).
+
+4. Tail-Recursive Tuple Sum (tuple_sum_tail / _tuple_sum_helper):
+   - Uses an index (starting from the last element) and an accumulator instead of tuple slicing.
+   - Base case: index < 0 -> return accumulator.
+   - Tail-recursive case: call _tuple_sum_helper(numbers, index - 1, accumulator + numbers[index]).
+   - The addition is done before the call; the accumulator carries the running sum forward.
+
+5. Tuple Sum Loop (tuple_sum_loop):
+   - Converts the tail-recursive sum into a simple for loop.
+   - Iterates through the tuple, accumulating the sum in a variable.
+
+Key Operations:
+- Accumulator pattern: passing the running result forward as a parameter instead of computing it on return.
+- Index-based traversal instead of tuple slicing to avoid O(n) copy cost per call.
+- While loop conversion of tail recursion for Python compatibility.
+- Print tracing to compare tail vs non-tail recursion behavior.
+
+Time Complexity:
+- All factorial and sum functions: O(n) — n recursive calls or loop iterations.
+
+Space Complexity:
+- Tail-recursive functions: O(n) in Python (no tail call optimization), but O(1) in languages that optimize tail calls.
+- Non-tail-recursive factorial: O(n) call stack.
+- Loop versions: O(1) extra space.

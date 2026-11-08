@@ -1,0 +1,73 @@
+Brute Force Pattern Matching
+=============================
+
+Brute force pattern matching checks every possible starting
+position in the text to see if the pattern matches there.
+
+This file explains the mechanism demonstrated in
+50_pattern_brute_force.py.
+
+Mechanism
+---------
+The algorithm works as follows:
+
+1. Start at position 0 in the text.
+2. Compare the pattern with the text character by character,
+   starting at the current position.
+3. If all characters of the pattern match the corresponding
+   characters in the text, a match is found at this position.
+4. If any character doesn't match, stop comparing at this
+   position and move one position to the right.
+5. Repeat steps 2-4 until you have tried every valid starting
+   position (i.e., from position 0 to position
+   len(text) - len(pattern)).
+
+Detailed step-by-step:
+- Outer loop: iterate i from 0 to (text_length - pattern_length).
+  This is the starting position in the text.
+- Inner loop: iterate j from 0 to (pattern_length - 1).
+  Compare text[i + j] with pattern[j].
+  - If they match, continue to the next character.
+  - If they don't match, break out of the inner loop and
+    move to the next starting position (i + 1).
+- If the inner loop completes without breaking (all characters
+  matched), record position i as a match.
+
+Data structures used:
+- Strings for the text and pattern.
+- A tuple to store the starting positions of all matches.
+
+Key operations:
+- Character-by-character comparison between text and pattern.
+- Early termination on mismatch (break from inner loop).
+- Position tracking for both text (i) and pattern (j).
+
+Time complexity:
+- Best case: O(n) — mismatch occurs at the first character
+  of the pattern for every starting position.
+- Worst case: O(n * m) — every starting position matches
+  the first (m-1) characters of the pattern before failing.
+  Example: text = "AAAA...A" (n chars), pattern = "AAA...AB"
+  (m chars). At each position, m-1 comparisons succeed
+  before the final mismatch.
+- Average case: O(n * m) in the general case.
+
+Space complexity:
+- O(1) extra space (excluding the output list of match
+  positions).
+
+Pros:
+- Simple to understand and implement.
+- No preprocessing needed.
+- Works for any text and pattern.
+
+Cons:
+- Slow for long texts or patterns, especially when there are
+  many partial matches.
+- Re-examines characters that were already compared in
+  previous attempts.
+
+Improvement:
+- Better algorithms like KMP avoid re-examining characters
+  we have already compared, achieving O(n + m) time by using
+  a failure function (prefix table) to skip ahead intelligently.

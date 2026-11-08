@@ -1,0 +1,70 @@
+03_circularly_linked_list.py — Circularly Linked List
+======================================================
+
+Data Structures Used:
+- Node class: Each node stores a value and a next pointer, identical to a singly linked list node.
+- CircularlyLinkedList class: Maintains a head pointer. The key difference from a singly
+  linked list is that the last node's next pointer points back to the head node, forming
+  a circle (loop) instead of ending in None.
+
+How the Algorithm Works (Step by Step):
+
+1. Node Creation: Same as a singly linked list — each node holds a value and a next reference.
+
+2. is_empty():
+   - Returns True if self.head is None (no nodes in the list).
+   - Time: O(1).
+
+3. insert_at_head(value):
+   - Create a new Node.
+   - If the list is empty, set new_node.next = new_node (point to itself) and set head to it.
+   - Otherwise:
+     a. Find the last node by walking from head until last.next == head.
+     b. Set new_node.next = self.head (new node points to old head).
+     c. Set last.next = new_node (old tail now points to new node).
+     d. Update self.head = new_node (new node becomes the head).
+   - Time: O(n) — must find the tail to update its next pointer.
+
+4. insert_at_tail(value):
+   - Create a new Node.
+   - If the list is empty, same as insert_at_head (self-referencing node).
+   - Otherwise:
+     a. Find the last node by walking from head until last.next == head.
+     b. Set last.next = new_node (old tail points to new node).
+     c. Set new_node.next = self.head (new node points back to head, completing the circle).
+   - Time: O(n) — must find the tail.
+
+5. delete_by_value(value):
+   - Handle empty list (print message and return).
+   - Handle single-node list where that node contains the value (set head to None).
+   - Handle head deletion: find the tail, set tail.next to head.next, update head to head.next.
+   - For other nodes: walk through the list looking for the node whose next contains the
+     target value, then skip it by setting current.next = current.next.next.
+   - Time: O(n).
+
+6. traverse():
+   - Start at head, follow next pointers, and build a string of values.
+   - Stop when we return to head (current == self.head), indicating we've gone full circle.
+   - Append "(back to head)" to show the circular nature.
+   - Time: O(n).
+
+7. is_circular():
+   - Start at head.next and follow next pointers.
+   - If we reach None, the list is not circular.
+   - If we return to head, the list is circular.
+   - Time: O(n).
+
+Key Operations Summary:
+- Insert at head: O(n) — must update tail's next pointer
+- Insert at tail: O(n) — must find the tail
+- Delete by value: O(n)
+- Traverse: O(n)
+- Check circular: O(n)
+
+Time Complexity: O(n) for most operations due to the need to find the tail
+Space Complexity: O(n) for storing n nodes; O(1) auxiliary space for pointer manipulation
+
+Key Difference from Singly Linked List:
+The last node points back to the head instead of None, creating a circular structure.
+This means there is no natural "end" to the list — traversal must stop when it returns
+to the starting node.

@@ -1,0 +1,51 @@
+12_recursion_analysis.py - Mechanism Explanation
+
+Data Structures Used:
+- A mutable dictionary {"count": 0} used as a nonlocal counter to track recursive call counts.
+- Integer parameters for the recursion depth/state.
+
+Algorithm Overview:
+This file analyzes recursive algorithms by implementing several classic recurrences and a call-counting mechanism for Fibonacci. It demonstrates how different recursive patterns behave and how to measure their cost.
+
+Step-by-Step Mechanism:
+
+1. Fibonacci (simple):
+   - Base cases: fib(0) = 0, fib(1) = 1.
+   - Recursive case: fib(n) = fib(n-1) + fib(n-2).
+   - Each call branches into two more calls, creating an exponential call tree.
+
+2. Fibonacci with Call Counting (fibonacci_counted):
+   - Uses a dict {"count": 0} as a mutable container so an inner function can modify it.
+   - The inner helper _fib increments the count on every entry, then follows the same Fibonacci logic.
+   - Returns both the result and the total number of calls made.
+   - This reveals the exponential number of redundant calls in naive Fibonacci.
+
+3. Sum to n (sum_to_n):
+   - Base case: sum_to_n(0) = 0.
+   - Recursive case: sum_to_n(n) = n + sum_to_n(n-1).
+   - Linear recursion — each call makes exactly one recursive call.
+
+4. Power function (power):
+   - Base case: power(base, 0) = 1.
+   - Recursive case: power(base, exponent) = base * power(base, exponent - 1).
+   - Linear recursion with one call per decrement of the exponent.
+
+5. Count down (count_down):
+   - Base case: count_down(0) prints "Done!" and returns.
+   - Recursive case: print n, then call count_down(n-1).
+   - Linear recursion with no return value (side-effect only).
+
+Key Operations:
+- Mutable dict trick to share mutable state across nested function scopes for counting.
+- Simple arithmetic recurrences (addition, multiplication).
+- Print-based tracing to visualize the recursion flow.
+
+Time Complexity:
+- Fibonacci (simple): O(2^n) — exponential, due to the binary branching and repeated subproblems.
+- Fibonacci counted: same O(2^n) but with overhead for counting.
+- sum_to_n: O(n) — linear.
+- power: O(n) — linear in the exponent.
+- count_down: O(n) — linear.
+
+Space Complexity:
+- O(n) for all functions due to the maximum recursion depth (call stack frames).

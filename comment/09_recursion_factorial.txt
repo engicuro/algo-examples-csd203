@@ -1,0 +1,55 @@
+09_recursion_factorial.py — Factorial Using Recursion
+======================================================
+
+Data Structures Used:
+- No explicit data structures (no lists, tuples, or classes).
+- Uses the function call stack implicitly to manage recursive calls. Each recursive call
+  adds a new frame to the call stack, storing the local variable n and the return address.
+
+How the Algorithm Works (Step by Step):
+
+1. factorial(n) — Simple Recursive Factorial:
+   - Base case: If n <= 1 (i.e., n is 0 or 1), return 1. This stops the recursion.
+     By mathematical definition, 0! = 1 and 1! = 1.
+   - Recursive case: If n > 1, compute n * factorial(n - 1).
+     - The function calls itself with a smaller argument (n - 1).
+     - Each call waits for the result of the next call before it can complete its own
+       multiplication.
+     - The call chain unfolds as: factorial(n) -> factorial(n-1) -> factorial(n-2) -> ...
+       -> factorial(1) -> returns 1.
+     - Then the results propagate back up: factorial(2) returns 2*1=2, factorial(3) returns
+       3*2=6, and so on until factorial(n) returns the final result.
+   - Time Complexity: O(n) — n recursive calls are made.
+   - Space Complexity: O(n) — the call stack grows to depth n.
+
+2. factorial_with_trace(n) — Recursive Factorial with Indented Call Trace:
+   - Uses a helper function _factorial_helper(n, depth) that tracks the current recursion
+     depth.
+   - The depth parameter controls the indentation of print statements, visually showing
+     how deep each call is in the recursion tree.
+   - indent = "  " * depth produces two spaces per recursion level.
+   - The same base case and recursive case logic applies, but with print statements that
+     show:
+     a. The call entering (e.g., "  factorial(5) = 5 * factorial(4)").
+     b. The return value (e.g., "  factorial(5) -> 120").
+   - This makes the recursion visible and easier to understand for learning purposes.
+   - Time Complexity: O(n) — same as factorial(n).
+   - Space Complexity: O(n) — same call stack depth.
+
+Key Concepts Illustrated:
+- Base Case: The condition that stops the recursion (n <= 1). Without a base case, the
+  function would call itself infinitely, causing a stack overflow.
+- Recursive Case: The part of the function that calls itself with a smaller problem
+  (n - 1), moving toward the base case.
+- Call Stack: Each recursive call adds a frame to the call stack. The stack stores local
+  variables (n, result) and the return address for each call. When the base case is reached,
+  frames are popped off the stack as each call returns its result.
+- Mathematical Definition: n! = n * (n-1) * (n-2) * ... * 1, with 0! = 1.
+
+Edge Cases Handled:
+- factorial(0) returns 1 (by definition).
+- factorial(1) returns 1 (base case).
+- Negative values would cause infinite recursion (not guarded against in this implementation).
+
+Time Complexity: O(n) — linear number of recursive calls
+Space Complexity: O(n) — call stack depth proportional to n

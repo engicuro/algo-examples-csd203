@@ -1,0 +1,46 @@
+Bucket Sort
+===========
+
+Data Structures Used:
+- Tuples (immutable). The algorithm uses _tuple_set to create new tuples with
+  elements set at a given index, since tuples cannot be modified in place.
+- An array of "buckets" — implemented as a tuple of tuples. Each bucket is a
+  tuple that holds all elements that hash to that bucket index.
+- Each bucket is sorted individually using insertion sort.
+
+How the Algorithm Works (Step by Step):
+1. Find the Maximum Value: Scan the input tuple to find the largest element.
+   This determines the number of buckets needed (max_val + 1).
+2. Create Buckets: Create a tuple of empty tuples, one for each possible value
+   from 0 to max_val. Each bucket index corresponds to a possible element value.
+3. Distribute Elements: For each element in the input tuple, place it into the
+   bucket whose index equals the element's value. This is done by appending the
+   element to the corresponding bucket tuple.
+4. Sort Each Bucket: Apply insertion sort to each non-empty bucket. Since
+   elements in a bucket all have the same value (they are distributed by value),
+   each bucket is already sorted or nearly sorted.
+5. Concatenate: Iterate through all buckets in order and append their sorted
+   contents to form the final sorted tuple.
+6. Print the distribution and bucket contents for visibility.
+
+Key Operations:
+- Comparisons: counted during the scan for the maximum value and during
+  insertion sort within each bucket.
+- The distribution step places each element directly into its bucket by value,
+  which is the key insight that makes bucket sort efficient for uniform data.
+- The number of buckets equals max_val + 1, which means this variant works
+  best when the range of values is not significantly larger than the number of
+  elements.
+
+Time Complexity:
+- Best case: O(n + k) — where n is the number of elements and k is the number
+  of buckets (max_val + 1). When elements are uniformly distributed, each
+  bucket has very few elements.
+- Worst case: O(n^2) — when all elements fall into a single bucket, reducing
+  to insertion sort on the entire array.
+- Average case: O(n + k) for uniformly distributed data.
+
+Space Complexity:
+- O(n + k) — where n is the number of elements stored across all buckets and
+  k is the number of buckets. Because tuples are immutable, new tuples are
+  created at each step.

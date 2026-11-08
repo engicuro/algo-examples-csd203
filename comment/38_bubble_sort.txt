@@ -1,0 +1,36 @@
+Bubble Sort
+===========
+
+Data Structures Used:
+- Tuples (immutable). The algorithm creates new tuples at each swap using the
+  helper function _tuple_swap, which produces a new tuple with two elements
+  exchanged at given indices.
+
+How the Algorithm Works (Step by Step):
+1. Repeat passes over the tuple from left to right.
+2. In each pass, compare each pair of adjacent elements (arr[j] and arr[j+1]).
+3. If the left element is greater than the right element, swap them (by creating
+   a new tuple with the two elements exchanged).
+4. After each pass, the largest unsorted element "bubbles up" to its correct
+   position at the end of the tuple.
+5. Track whether any swaps occurred during a pass. If no swaps happened, the
+   tuple is already sorted and the algorithm stops early (early termination
+   optimization).
+6. Print the tuple after each pass so the progress is visible.
+
+Key Operations:
+- Comparisons: each time two adjacent elements are compared.
+- Swaps: each time two adjacent elements are out of order and are exchanged.
+- The number of elements to check shrinks by one after each pass because the
+  last i elements are already in their final positions.
+
+Time Complexity:
+- Best case: O(n) — when the tuple is already sorted; only one pass is needed
+  with no swaps, triggering early termination.
+- Worst case: O(n^2) — when the tuple is sorted in reverse order; every pair
+  requires a swap on every pass.
+- Average case: O(n^2).
+
+Space Complexity:
+- O(n) — because tuples are immutable, each swap creates a new tuple. The
+  algorithm does not sort in place.

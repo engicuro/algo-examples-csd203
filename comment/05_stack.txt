@@ -1,0 +1,70 @@
+05_stack.py — Stack Implementation (LIFO)
+==========================================
+
+Data Structures Used:
+- Python tuples (immutable ordered sequences) are used to implement the stack.
+- No Python lists, no external libraries. The stack is a tuple where the rightmost element
+  is the "top" of the stack.
+
+How the Algorithm Works (Step by Step):
+
+Core Stack Operations (all built on tuples):
+
+1. stack_create(): Returns an empty tuple (). This is the initial empty stack.
+
+2. stack_push(stk, item):
+   - Adds an item to the top of the stack.
+   - Since tuples are immutable, creates a new tuple by concatenating the old tuple with
+     (item,). The new item becomes the last (rightmost) element.
+   - Time: O(n) — all existing elements must be copied into the new tuple.
+
+3. stack_pop(stk):
+   - Removes and returns the top item (the last element of the tuple).
+   - Returns (None, stk) if the stack is empty.
+   - Uses stk[-1] to get the top element and stk[:-1] to get the remaining stack.
+   - Time: O(n) — slicing creates a new tuple copying all but the last element.
+
+4. stack_peek(stk):
+   - Returns the top item without removing it (stk[-1]).
+   - Returns None if the stack is empty.
+   - Time: O(1).
+
+5. stack_is_empty(stk):
+   - Returns True if len(stk) == 0.
+   - Time: O(1).
+
+6. stack_size(stk):
+   - Returns len(stk).
+   - Time: O(1).
+
+Example 1 — Balanced Parentheses Checker (is_balanced):
+- Walks through every character in the expression string.
+- When an opening bracket (, [, { is encountered, push it onto the stack.
+- When a closing bracket ), ], } is encountered:
+  a. If the stack is empty, return False (no matching opener).
+  b. Pop the top of the stack and check that it matches the corresponding opening bracket.
+  c. If it doesn't match, return False.
+- At the end, the stack must be empty (every opening bracket found its match).
+- Time: O(n) where n is the length of the expression.
+- Space: O(n) in the worst case (all characters are opening brackets).
+
+Example 2 — Postfix Expression Evaluator (eval_postfix):
+- Processes tokens (numbers and operators) left to right.
+- When a number is encountered, push it onto the stack.
+- When an operator (+, -, *, /) is encountered:
+  a. Pop two operands (b first, then a).
+  b. Apply the operator: a op b.
+  c. Push the result back onto the stack.
+- At the end, the single remaining value on the stack is the answer.
+- Time: O(n) where n is the number of tokens.
+- Space: O(n) for the stack.
+
+Key Operations Summary:
+- Push: O(n) due to tuple immutability
+- Pop: O(n) due to tuple slicing
+- Peek: O(1)
+- Is Empty: O(1)
+- Size: O(1)
+
+Time Complexity: O(n) for push/pop (tuple copy); O(n) for balanced check and postfix eval
+Space Complexity: O(n) for the tuple storage

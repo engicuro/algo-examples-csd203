@@ -1,0 +1,45 @@
+15_recursion_multiple.py - Mechanism Explanation
+
+Data Structures Used:
+- Tuples to represent rows of Pascal's triangle.
+- Integer parameters (row_index, n, k) for recursion state.
+
+Algorithm Overview:
+This file demonstrates "multiple recursion," where a function makes more than two recursive calls per invocation (or calls multiple different recursive functions). Two examples are covered: Pascal's triangle construction and combination (n choose k) calculation. Both share the same underlying recurrence relation.
+
+Step-by-Step Mechanism:
+
+1. Pascal's Triangle (pascal_row):
+   - Base case 1: row_index == 0 -> return (1,).
+   - Base case 2: row_index == 1 -> return (1, 1).
+   - Recursive case: obtain the previous row by calling pascal_row(row_index - 1).
+   - Build the current row starting with 1.
+   - For each middle position i (from 1 to row_index - 1), compute the element as prev_row[i-1] + prev_row[i].
+   - End the row with 1.
+   - This is single recursion (one call to pascal_row per invocation), but it builds on the result of the previous row.
+
+2. Print Pascal's Triangle (print_pascal_triangle):
+   - Iterates from row 0 to num_rows - 1.
+   - Calls pascal_row for each row index and prints the row with spacing.
+
+3. Combination / n choose k (combination):
+   - Base case 1: k > n -> return 0 (impossible selection).
+   - Base case 2: k == 0 -> return 1 (empty selection).
+   - Base case 3: k == n -> return 1 (select all items).
+   - Recursive case: C(n, k) = C(n-1, k-1) + C(n-1, k).
+   - This makes TWO recursive calls per invocation, each with different parameters.
+   - The call tree branches into two paths at each level, leading to exponential growth.
+
+Key Operations:
+- Tuple concatenation to build Pascal's triangle rows incrementally.
+- Indexing into the previous row to compute middle elements.
+- Two recursive calls in the combination function, creating a binary recursion tree.
+- The recurrence C(n,k) = C(n-1,k-1) + C(n-1,k) mirrors Pascal's triangle construction.
+
+Time Complexity:
+- pascal_row for a single row: O(row_index^2) — each row requires computing up to row_index elements.
+- combination: O(2^n) in the worst case — exponential due to overlapping subproblems and binary branching.
+
+Space Complexity:
+- O(n) for the recursion depth in combination (the longest chain of calls).
+- O(n) for pascal_row recursion depth (building row by row from row 0).

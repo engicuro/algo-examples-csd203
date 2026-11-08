@@ -1,0 +1,66 @@
+AVL Tree (Self-Balancing Binary Search Tree)
+
+Data Structures Used:
+- A Node class with four fields: value, left (pointer to left child), right (pointer to right child), and height (an integer tracking the height of the node for balance calculations).
+- The AVL tree is represented by a reference to the root node.
+- The BST ordering property is maintained (left subtree values < node value < right subtree values).
+
+How the Algorithm Works:
+
+1. BALANCE FACTOR:
+   - The balance factor of a node is defined as: height(left subtree) - height(right subtree).
+   - A node is balanced if its balance factor is -1, 0, or 1.
+   - If the balance factor becomes 2 or -2 after an insertion, the tree is unbalanced and rotations are needed.
+
+2. HEIGHT MANAGEMENT:
+   - Each node stores its height. A None (empty) node has height 0.
+   - After any structural change (insertion or rotation), the height of affected nodes is recalculated as: 1 + max(height(left), height(right)).
+   - The update_height function recalculates and stores the height of a single node.
+
+3. ROTATIONS (four types to fix imbalances):
+
+   a) RIGHT ROTATION (fixes Left-Left / LL imbalance):
+      - Used when the left subtree is too tall and the new value was inserted into the left subtree's left side.
+      - The left child (x) becomes the new root of this subtree.
+      - x's original right child (T2) becomes the left child of the old root (y).
+      - y becomes the right child of x.
+      - Heights of y and x are updated (y first, since it is now below x).
+
+   b) LEFT ROTATION (fixes Right-Right / RR imbalance):
+      - Used when the right subtree is too tall and the new value was inserted into the right subtree's right side.
+      - The right child (y) becomes the new root of this subtree.
+      - y's original left child (T2) becomes the right child of the old root (x).
+      - x becomes the left child of y.
+      - Heights of x and y are updated (x first, since it is now below y).
+
+   c) LEFT-RIGHT ROTATION (fixes Left-Right / LR imbalance):
+      - Used when the left subtree is too tall but the new value was inserted into the left subtree's right side.
+      - First, perform a left rotation on the left child (converting the LR case into an LL case).
+      - Then, perform a right rotation on the original node.
+
+   d) RIGHT-LEFT ROTATION (fixes Right-Left / RL imbalance):
+      - Used when the right subtree is too tall but the new value was inserted into the right subtree's left side.
+      - First, perform a right rotation on the right child (converting the RL case into an RR case).
+      - Then, perform a left rotation on the original node.
+
+4. INSERT WITH REBALANCING:
+   - Step 1: Perform a standard BST insert recursively.
+   - Step 2: Update the height of the current (ancestor) node.
+   - Step 3: Compute the balance factor of the current node.
+   - Step 4: If the balance factor is greater than 1 or less than -1, determine which of the four cases applies based on the balance factor and the value being inserted, then perform the appropriate rotation(s).
+   - Return the (possibly new) root of this subtree.
+
+5. INORDER TRAVERSAL:
+   - Standard recursive inorder traversal: left subtree, current node, right subtree.
+   - Prints values in sorted (ascending) order, confirming the BST property is maintained.
+
+Key Operations:
+- insert(node, value): O(log n) time. The BST insert is O(h), and at most two rotations (each O(1)) are needed per insertion. Since the tree is balanced, h = O(log n).
+- All rotation operations: O(1) time (pointer reassignments and height updates).
+- get_height, get_balance, update_height: O(1) time.
+- inorder(node): O(n) time (visits every node once).
+
+Space Complexity:
+- O(n) for storing all nodes.
+- O(log n) for the recursion stack during insert (since the tree is balanced, height is O(log n)).
+- O(n) worst case for the recursion stack if the tree becomes unbalanced (should not happen in a correctly implemented AVL tree).

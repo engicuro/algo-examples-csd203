@@ -1,0 +1,49 @@
+Dijkstra's Algorithm (Shortest Path Finder)
+=============================================
+
+Data Structures Used:
+- A dictionary (graph) mapping each vertex to a tuple of (neighbor, weight) tuples, representing a weighted adjacency list.
+- A dictionary (distances) mapping each vertex to its current known shortest distance from the start vertex.
+- A dictionary (previous) mapping each vertex to the predecessor vertex on the shortest path, used for path reconstruction.
+- A set (visited) to track which vertices have been fully processed.
+- math.inf is used to represent "infinity" (unreachable) as the initial distance for all vertices except the start.
+
+How the Algorithm Works:
+1. Initialization:
+   - Set every vertex's distance to infinity (math.inf), except the start vertex which is set to 0.
+   - Set every vertex's predecessor to None.
+   - Create an empty visited set.
+
+2. Main Loop (repeat until all vertices are visited or no reachable unvisited vertex remains):
+   a. find_smallest_unvisited(distances, visited):
+      - Scans all vertices to find the unvisited vertex with the smallest known distance.
+      - Returns that vertex, or None if all reachable vertices have been visited.
+   b. Mark the selected vertex as visited.
+   c. For each neighbor of the current vertex (skipping already visited neighbors):
+      - Calculate the tentative distance: distances[current] + edge_weight.
+      - If this tentative distance is less than the neighbor's current known distance, update the neighbor's distance and set its predecessor to the current vertex.
+
+3. Path Reconstruction (get_shortest_path):
+   - Starting from the target vertex, follow the predecessor links backwards to the start vertex.
+   - Reverse the resulting sequence to get the path from start to target.
+   - If the path does not start at the start vertex, return an empty tuple (no path exists).
+
+Key Operations:
+- Finding the minimum unvisited vertex: O(V) linear scan.
+- Relaxing edges: For each visited vertex, examine all its neighbors and update distances if a shorter path is found.
+- Path reconstruction: O(L) where L is the path length, by following predecessor links.
+
+Time Complexity:
+- O(V^2 + E) where V is the number of vertices and E is the number of edges.
+  - The main loop runs V times (once per vertex).
+  - Each iteration calls find_smallest_unvisited which is O(V).
+  - Each vertex's edges are examined once during relaxation, totaling O(E).
+  - Total: O(V^2) for the minimum-finding scans + O(E) for edge relaxation = O(V^2 + E).
+- With a priority queue (min-heap), this can be improved to O((V + E) log V), but this implementation uses a simple linear scan for clarity.
+
+Space Complexity:
+- O(V + E) for the graph, distances, previous, and visited structures.
+
+Use Case:
+- Finding shortest paths in weighted graphs with non-negative edge weights.
+- GPS navigation, network routing, and any scenario requiring minimum-cost paths.

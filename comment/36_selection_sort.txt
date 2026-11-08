@@ -1,0 +1,47 @@
+Selection Sort
+==============
+
+Data Structures Used:
+- A tuple (arr) representing the collection of elements to be sorted. Since tuples are immutable, every swap creates a new tuple.
+- Integer variables (comparisons, swaps) to count the number of comparison and swap operations performed.
+
+How the Algorithm Works:
+1. selection_sort(arr):
+   - The algorithm divides the tuple into a sorted prefix (at the beginning) and an unsorted suffix (the remainder).
+   - Initially, the sorted prefix is empty and the unsorted suffix is the entire tuple.
+   - For each position i from 0 to n-1:
+     a. Assume the element at position i is the minimum (min_index = i).
+     b. Scan the unsorted suffix (positions i+1 to n-1) to find the actual minimum element.
+        - For each position j in the unsorted suffix, compare arr[j] with arr[min_index].
+        - If arr[j] is smaller, update min_index to j.
+        - Increment the comparison counter for each comparison.
+     c. If min_index != i (a smaller element was found), swap the elements at positions i and min_index using _tuple_swap.
+        - Increment the swap counter.
+     d. Print the tuple after this step to show the sorting progress.
+   - Return the sorted tuple, total comparison count, and total swap count.
+
+2. Helper functions:
+   - _tuple_swap(t, i, j): Returns a new tuple with elements at indices i and j swapped. Uses tuple slicing and concatenation to construct the new tuple. If i == j, returns the original tuple unchanged.
+   - _tuple_set(t, i, val): Returns a new tuple with the element at index i replaced by val. Uses slicing to splice in the new value.
+
+Key Operations:
+- Minimum finding: Linear scan of the unsorted portion to find the smallest element. O(n) per pass.
+- Swapping: Reconstructs the tuple with two elements exchanged using slicing and concatenation.
+- The algorithm makes exactly n-1 passes over the data, and on each pass it places the correct element into position i.
+
+Time Complexity:
+- O(n^2) in all cases (best, average, worst).
+  - The outer loop runs n times.
+  - The inner loop runs (n-1) + (n-2) + ... + 1 = n(n-1)/2 times.
+  - Total comparisons: n(n-1)/2 = O(n^2).
+  - Total swaps: At most n-1 = O(n).
+- Selection sort is not adaptive; it performs the same number of comparisons regardless of the input order.
+
+Space Complexity:
+- O(1) auxiliary space (not counting the input and output tuples). The algorithm sorts in-place conceptually, though tuple immutability means each swap creates a new tuple of size n.
+- If counting the tuple copies, each swap creates a new tuple of O(n) size, but only one copy exists at any time.
+
+Use Case:
+- Simple sorting algorithm easy to understand and implement.
+- Useful for small datasets or when memory writes are expensive (since it minimizes the number of swaps to at most n-1).
+- Not suitable for large datasets due to its O(n^2) time complexity.

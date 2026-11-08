@@ -1,0 +1,98 @@
+Custom Hash Table Class (Python Hash Table)
+=============================================
+
+This file explains how a hash table works internally by
+building a simple custom class from scratch using only
+plain Python tuples, as demonstrated in 49_python_hash_table.py.
+
+Python's built-in dict is a highly optimized hash table, but
+understanding how one works helps you appreciate what happens
+when you write my_dict[key] = value.
+
+Class: SimpleHashTable
+-----------------------
+
+Attributes:
+- size: The current number of buckets.
+- count: The number of key-value pairs stored.
+- buckets: A tuple of tuples. Each inner tuple holds
+  (key, value) pairs that hashed to that bucket.
+- max_load_factor: When count / size exceeds this, the table
+  is rehashed automatically.
+
+Initialization (__init__):
+- Creates an empty hash table with a given initial size
+  (default 7, should be prime).
+- Initializes buckets as a tuple of empty tuples.
+- Sets count to 0 and max_load to 0.7 by default.
+
+Hash function (_hash):
+- Uses Python's built-in hash() function (works for both
+  strings and integers).
+- Takes the remainder with the table size: hash(key) % self.size.
+- Returns the bucket index.
+
+Load factor (_load_factor):
+- Computed as self.count / self.size.
+- Used to decide when to trigger rehashing.
+
+Rehashing (_rehash):
+- Called automatically when the load factor exceeds max_load.
+- Doubles the table size.
+- Creates a new empty table with the new size.
+- Iterates through all buckets in the old table and
+  re-inserts every (key, value) pair into the new table
+  using the put() method (which recomputes hash indices
+  based on the new table size).
+- Resets count to 0 and re-increments as items are re-inserted.
+
+Operations:
+-----------
+
+put(key, value):
+- Checks if rehashing is needed before inserting.
+- Computes the bucket index using _hash(key).
+- If the key already exists in the bucket, updates its value.
+- If the key is new, appends (key, value) to the bucket
+  and increments count.
+- Time: O(1) average, O(n) worst case (all keys in one bucket).
+
+get(key):
+- Computes the bucket index using _hash(key).
+- Linearly scans the bucket for the key.
+- Returns the value if found, or None.
+- Time: O(1) average, O(n) worst case.
+
+remove(key):
+- Computes the bucket index using _hash(key).
+- Linearly scans the bucket for the key.
+- If found, removes the (key, value) pair from the bucket
+  and decrements count. Returns True.
+- If not found, returns False.
+- Time: O(1) average, O(n) worst case.
+
+__str__:
+- Returns a string representation showing the table size,
+  item count, load factor, and contents of non-empty buckets.
+
+Data structures used:
+- Tuple of tuples for the hash table (immutable, functional
+  style — each modification creates a new tuple via slicing
+  and concatenation).
+- Python's built-in hash() function for key hashing.
+
+Time complexity:
+- put, get, remove: O(1) average case, O(n) worst case
+  (when all keys hash to the same bucket).
+- Rehashing: O(n) but happens infrequently, so amortized
+  cost per operation is O(1).
+
+Space complexity:
+- O(n + m) where n is the number of items and m is the
+  number of buckets.
+
+Key insight:
+- The class demonstrates the full lifecycle of a hash table:
+  hashing, collision resolution via chaining, load factor
+  monitoring, and automatic rehashing — all without using
+  Python's built-in dict.

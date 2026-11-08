@@ -1,0 +1,43 @@
+Binary Tree ADT (Insert, Search, Delete)
+
+Data Structures Used:
+- A Node class with three fields: value, left (pointer to left child), and right (pointer to right child).
+- A BinaryTree class that holds a reference to the root node.
+- A tuple is used as a queue for level-order traversal (instead of a Python list).
+
+How the Algorithm Works:
+
+1. INSERT (level-order insertion to keep the tree complete):
+   - If the tree is empty, the new node becomes the root.
+   - Otherwise, perform a level-order traversal using a tuple as a queue and a front index pointer.
+   - Walk through nodes level by level, left to right.
+   - The first node that is missing a left or right child gets the new node attached there.
+   - This ensures the tree remains "complete" (all levels filled except possibly the last, which is filled left to right).
+
+2. SEARCH (linear scan since there is no ordering in a general binary tree):
+   - If the tree is empty, return False.
+   - Perform a level-order traversal using a tuple as a queue.
+   - At each node, check if the node's value matches the target value.
+   - If found, return True. If the entire tree is traversed without finding the value, return False.
+
+3. DELETE (replace with deepest rightmost node to maintain completeness):
+   - If the tree is empty, print a message and return.
+   - If the tree has only the root node, remove it if its value matches.
+   - Otherwise, perform a level-order traversal to:
+     a) Find the node to delete (first match).
+     b) Track the deepest, rightmost node (the last node in the queue).
+   - Copy the deepest node's value into the node to delete.
+   - Remove the deepest node by setting its parent's corresponding child pointer to None.
+   - This preserves the complete binary tree structure.
+
+Key Operations:
+- insert(value): O(n) time in the worst case (must traverse all nodes to find the first empty spot).
+- search(value): O(n) time (must check every node since there is no ordering).
+- delete(value): O(n) time (two traversals — one to find the node, one to find the deepest node).
+- Space complexity for all operations: O(n) for the queue used in level-order traversal.
+
+Time Complexity Summary:
+- Insert: O(n)
+- Search: O(n)
+- Delete: O(n)
+- Space: O(n) for the queue

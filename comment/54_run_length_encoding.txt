@@ -1,0 +1,108 @@
+Run-Length Encoding (RLE)
+===========================
+
+Run-length encoding is a simple compression algorithm that
+replaces consecutive repeated characters with a count and
+the character.
+
+This file explains the mechanism demonstrated in
+54_run_length_encoding.py.
+
+Mechanism
+---------
+
+Encoding:
+---------
+1. Walk through the input text character by character.
+2. Track the current character and a count of consecutive
+   occurrences.
+3. For each character:
+   - If it is the same as the previous character, increment
+     the count.
+   - If it is different, write the count and the previous
+     character to the output, then reset the count to 1
+     and update the current character.
+4. After the loop ends, write the final count and character
+   (the last run).
+
+Example:
+  "AAABBBCCCDA" → "3A3B3C1D1A"
+  "AAAA"        → "4A"
+  "ABCD"        → "1A1B1C1D" (no compression — can get bigger!)
+
+Data structures used:
+- Strings for the input text and the encoded output.
+- A counter variable to track the length of the current run.
+- A variable to track the current character being counted.
+
+Key operations:
+- Character comparison: check if the current character equals
+  the previous character.
+- Count accumulation: increment count for consecutive matches.
+- Run writing: append count + character to the encoded string
+  when a different character is encountered.
+
+Decoding:
+---------
+1. Walk through the encoded string character by character.
+2. Accumulate digits to form the count.
+3. When a non-digit character is encountered:
+   - Convert the accumulated digits to an integer (the count).
+   - Repeat the character that many times and append to the
+     decoded output.
+   - Reset the digit accumulator.
+4. Continue until all characters are processed.
+
+Example:
+  "3A3B2C" → "AAABBBCC"
+
+Data structures used:
+- Strings for the encoded input and decoded output.
+- A string accumulator for building the count from digits.
+
+Key operations:
+- Digit detection: check if a character is a digit (0-9).
+- Count accumulation: append digit characters to form the
+  full count number.
+- Character expansion: repeat the character count times and
+  append to the output.
+
+Time complexity:
+- Encoding: O(n) where n = length of the input text. Each
+  character is visited exactly once.
+- Decoding: O(m) where m = length of the encoded string.
+  Each character in the encoded string is visited once.
+  The output size may be larger than m, but each output
+  character is produced in O(1) amortized time.
+
+Space complexity:
+- O(n) for the encoded output (worst case, when there are
+  no runs and the output is larger than the input).
+- O(n) for the decoded output (same size as original input).
+
+When RLE is effective:
+- Data with many consecutive repeated characters (e.g.,
+  simple graphics, sparse data, binary images).
+- Example: "WWWWWWWWWWBBBWWWWWWWWWWWWBBBWWWWWWWWWWWWWW"
+  compresses well because of long runs of 'W' and 'B'.
+
+When RLE is NOT effective:
+- Data with few or no repeated characters (e.g., "ABCDEFG").
+  The encoded version "1A1B1C1D1E1F1G" is actually larger
+  than the original.
+
+Pros:
+- Very simple to understand and implement.
+- Fast — O(n) time for both encoding and decoding.
+- Works well for data with long runs of repeated values.
+
+Cons:
+- Can make data BIGGER if there are few repeats.
+- Only compresses runs of the same character.
+- Not suitable for complex text or diverse data.
+
+Applications:
+- Often used as part of more complex compression pipelines
+  (e.g., in PNG images, where filter + RLE is applied
+  before the main compression step).
+- Simple graphics and binary raster graphics compression.

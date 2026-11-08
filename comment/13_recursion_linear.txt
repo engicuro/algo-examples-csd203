@@ -1,0 +1,44 @@
+13_recursion_linear.py - Mechanism Explanation
+
+Data Structures Used:
+- Tuples of integers (immutable sequences) as the primary data input.
+- Integer values for intermediate results (sum, max, power).
+
+Algorithm Overview:
+This file demonstrates "linear recursion," where each function call makes at most ONE recursive call. The recursion proceeds in a straight chain — like a linked list — with the base case at one end and results bubbling back up through the chain of returns.
+
+Step-by-Step Mechanism:
+
+1. Tuple Sum (tuple_sum):
+   - Base case: empty tuple -> return 0.
+   - Recursive case: split the tuple into the first element and the rest (numbers[1:]).
+   - Print the decomposition, then return first + tuple_sum(rest).
+   - The result accumulates as the recursion unwinds: each return adds the current first element to the sum computed by the deeper call.
+   - Note: numbers[1:] creates a new tuple each time, which is O(n) per call.
+
+2. Tuple Max (tuple_max):
+   - Base case: a tuple with one element -> that element is the maximum, return it.
+   - Recursive case: split into first and rest. Recursively find max_of_rest = tuple_max(rest).
+   - Compare first with max_of_rest and return the larger value.
+   - The comparison happens during the unwinding phase (after the recursive call returns).
+
+3. Power Function (power):
+   - Base case: exponent <= 0 -> return 1.
+   - Recursive case: base^exponent = base * power(base, exponent - 1).
+   - Each call reduces the exponent by 1, creating a linear chain of calls.
+   - The multiplication happens after the recursive call returns (during unwinding).
+
+Key Operations:
+- Tuple slicing (numbers[1:]) to decompose the input — creates new tuples at each step.
+- Comparison (first > max_of_rest) for finding the maximum.
+- Multiplication (base * ...) for exponentiation.
+- Print tracing to show the recursion chain and result bubbling.
+
+Time Complexity:
+- tuple_sum: O(n^2) — n calls each with O(n) tuple slicing.
+- tuple_max: O(n^2) — same slicing overhead.
+- power: O(n) — n recursive calls, each doing O(1) work (no slicing).
+
+Space Complexity:
+- O(n) for the call stack depth in all cases.
+- Additional O(n^2) space for tuple_sum and tuple_max due to repeated tuple slicing creating new tuples.

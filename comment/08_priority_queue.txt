@@ -1,0 +1,81 @@
+08_priority_queue.py — Priority Queue Implementation
+====================================================
+
+Data Structures Used:
+- Python tuples (immutable ordered sequences) are used to implement the priority queue.
+- The priority queue is stored as a tuple of (item, priority) tuples, sorted in descending
+  order by priority (highest priority first).
+- No Python lists, no heapq, no external libraries.
+
+How the Algorithm Works (Step by Step):
+
+Core Priority Queue Operations:
+
+1. pq_create(): Returns an empty tuple (). This is the initial empty priority queue.
+
+2. pq_push(pq, item, priority) — Sorted Insert Version:
+   - Creates a new entry tuple (item, priority).
+   - Walks through the existing priority queue to find the correct insertion position so
+     that the queue remains sorted by priority (highest first).
+   - Builds a new tuple by concatenating entries in the correct order.
+   - If the new item has the highest priority, it is inserted at the front.
+   - If the new item has the lowest priority, it is appended at the end.
+   - Time: O(n) — must scan through the tuple to find the insertion position.
+
+3. pq_pop(pq):
+   - Removes and returns the highest-priority item (the first element of the tuple).
+   - Since the queue is sorted, the highest-priority item is always at index 0.
+   - Returns (None, pq) if the queue is empty.
+   - Uses pq[0] to get the entry and pq[1:] for the remaining queue.
+   - Time: O(n) — slicing copies all but the first element.
+
+4. pq_peek(pq):
+   - Returns the highest-priority item without removing it (pq[0]).
+   - Returns None if the queue is empty.
+   - Time: O(1).
+
+5. pq_is_empty(pq):
+   - Returns True if len(pq) == 0.
+   - Time: O(1).
+
+6. pq_size(pq):
+   - Returns len(pq).
+   - Time: O(1).
+
+Alternative Simple Version (pq_push_simple / pq_pop_simple):
+- pq_push_simple: Simply appends the new entry to the end of the tuple — O(n) for the
+  tuple copy, but no scanning needed.
+- pq_pop_simple: Scans the entire tuple to find the entry with the highest priority, then
+  rebuilds the tuple without that entry — O(n) for the scan and O(n) for the tuple rebuild.
+- Trade-off: push is O(1) copy + O(1) append but pop is O(n) scan; vs. sorted insert where
+  push is O(n) scan but pop is O(1) front removal.
+
+Example 1 — Task Scheduler (task_scheduler):
+- Tasks with different priority levels are pushed into the priority queue.
+- Higher priority numbers mean higher priority (max-priority queue).
+- Tasks are popped in priority order (highest first) and "executed" (printed).
+- Demonstrates that the queue always returns the highest-priority task next.
+
+Example 2 — Emergency Room Triage (er_triage_demo):
+- Patients arrive with triage levels (1=minor, 5=critical).
+- Patients are pushed into the priority queue with their triage level as priority.
+- Patients are treated in priority order — the most critical patient is treated first.
+- Demonstrates a real-world use of priority queues for scheduling.
+
+Example 3 — Compare Sorted-Insert vs Scan-on-Pop (compare_two_approaches):
+- Shows that both approaches (sorted insert on push vs. scan on pop) produce the same
+  output order, but with different performance characteristics:
+  - Sorted-insert: push is O(n), pop is O(1).
+  - Scan-on-pop: push is O(1), pop is O(n).
+
+Key Operations Summary:
+- Push (sorted): O(n) — must scan for insertion position
+- Push (simple): O(n) — tuple copy, no scan
+- Pop (sorted): O(n) — tuple slicing
+- Pop (simple): O(n) — scan + tuple rebuild
+- Peek: O(1)
+- Is Empty: O(1)
+- Size: O(1)
+
+Time Complexity: O(n) for push and pop operations; O(n^2) for building a queue of n elements
+Space Complexity: O(n) for the tuple storage of (item, priority) pairs

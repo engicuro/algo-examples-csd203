@@ -1,0 +1,40 @@
+14_recursion_binary.py - Mechanism Explanation
+
+Data Structures Used:
+- Tuples of integers as input data.
+- Integer indices (low, high, mid) for range-based splitting.
+- A call tree (implicit) formed by two recursive calls per invocation.
+
+Algorithm Overview:
+This file demonstrates "binary recursion," where each function call makes TWO recursive calls, creating a branching tree of calls rather than a linear chain. Two examples are provided: Fibonacci (classic binary recursion) and binary sum (divide-and-conquer style).
+
+Step-by-Step Mechanism:
+
+1. Fibonacci (binary recursion):
+   - Base cases: fib(0) = 0, fib(1) = 1.
+   - Recursive case: fib(n) = fib(n-1) + fib(n-2).
+   - Each call spawns two child calls, forming a binary tree of recursive calls.
+   - The depth of the tree is n, and the total number of calls is approximately O(2^n).
+   - Print tracing with indentation (depth parameter) visualizes the branching tree.
+
+2. Binary Sum (binary_sum):
+   - Base case 1: if low > high, the range is empty -> return 0.
+   - Base case 2: if low == high, only one element -> return numbers[low].
+   - Recursive case: compute mid = (low + high) // 2, then split the range into two halves.
+   - Recursively compute left_sum = binary_sum(numbers, low, mid) and right_sum = binary_sum(numbers, mid + 1, high).
+   - Return left_sum + right_sum.
+   - This is a divide-and-conquer approach: the problem is divided into two subproblems of roughly equal size.
+
+Key Operations:
+- Midpoint computation: mid = (low + high) // 2.
+- Range splitting into two halves.
+- Two recursive calls per invocation (binary branching).
+- Addition of results from both halves during the unwinding phase.
+
+Time Complexity:
+- Fibonacci: O(2^n) — exponential, due to redundant computation of overlapping subproblems.
+- Binary sum: O(n) — each element is visited exactly once, despite the binary branching (the total work across all nodes at each level is O(n), and there are O(log n) levels, but the sum across all levels is O(n)).
+
+Space Complexity:
+- O(log n) for binary_sum due to the recursion depth (the tree is balanced).
+- O(n) for Fibonacci in the worst case (the longest chain of calls is n deep).

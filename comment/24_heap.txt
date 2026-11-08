@@ -1,0 +1,68 @@
+Min-Heap and Max-Heap (using tuples)
+
+Data Structures Used:
+- A heap is a complete binary tree stored in a flat tuple (immutable sequence).
+- For a node at index i (0-based indexing):
+  - Parent index: (i - 1) // 2
+  - Left child index: 2 * i + 1
+  - Right child index: 2 * i + 2
+- Two classes are implemented: MinHeap and MaxHeap, each storing data as a tuple.
+- A MinHeap maintains the property that every parent is less than or equal to its children (smallest value at the root).
+- A MaxHeap maintains the property that every parent is greater than or equal to its children (largest value at the root).
+
+How the Algorithm Works:
+
+1. INDEX CALCULATIONS:
+   - _parent(index): returns (index - 1) // 2.
+   - _left_child(index): returns 2 * index + 1.
+   - _right_child(index): returns 2 * index + 2.
+
+2. SWAP (tuple-based, since tuples are immutable):
+   - _swap(data, i, j): creates a new tuple with elements at positions i and j swapped.
+   - Uses tuple slicing: data[:i] + (data[j],) + data[i+1:j] + (data[i],) + data[j+1:].
+   - If i == j, returns the tuple unchanged.
+
+3. SIFT UP (used after push to restore heap property):
+   - Starting from the newly added element at the end of the tuple, compare it with its parent.
+   - For MinHeap: if the current element is smaller than its parent, swap them.
+   - For MaxHeap: if the current element is larger than its parent, swap them.
+   - Move up to the parent's position and repeat.
+   - Stop when the element is no longer out of order with its parent, or it reaches the root.
+
+4. SIFT DOWN (used after pop to restore heap property):
+   - Starting from the root (or any displaced node), compare it with its children.
+   - For MinHeap: if the current element is larger than either child, swap it with the smaller child.
+   - For MaxHeap: if the current element is smaller than either child, swap it with the larger child.
+   - Move down to the swapped child's position and repeat.
+   - Stop when the element is in the correct position relative to both children, or it reaches a leaf.
+
+5. PUSH (add a value to the heap):
+   - Append the value to the end of the tuple (tuple concatenation).
+   - Call _sift_up from the last index to restore the heap property.
+
+6. POP (remove and return the top value):
+   - Save the root value (minimum for MinHeap, maximum for MaxHeap).
+   - If the heap has only one element, clear the tuple and return the saved value.
+   - Otherwise, take the last element and move it to the root position.
+   - Remove the last element from the tuple.
+   - Call _sift_down from the root to restore the heap property.
+   - Return the saved top value.
+
+7. PEEK (return the top value without removing it):
+   - Return the first element of the tuple (index 0).
+
+8. HEAP SORT:
+   - Ascending sort: build a MinHeap from all elements, then repeatedly pop the minimum. The popped values come out in sorted ascending order.
+   - Descending sort: build a MaxHeap from all elements, then repeatedly pop the maximum. The popped values come out in sorted descending order.
+   - Time complexity: O(n log n) for both.
+
+Key Operations and Complexity:
+- push(value): O(log n) time (sift up traverses at most the height of the tree, which is O(log n)).
+- pop(): O(log n) time (sift down traverses at most the height of the tree).
+- peek(): O(1) time (direct access to the root).
+- size(): O(1) time (len of the tuple).
+- heap_sort: O(n log n) time (n pushes at O(log n) each + n pops at O(log n) each).
+
+Space Complexity:
+- O(n) for storing all elements in the tuple.
+- Note: Since tuples are immutable in Python, every push and pop creates a new tuple. This makes the actual memory usage higher than a mutable list-based implementation, but the algorithmic complexity remains the same.

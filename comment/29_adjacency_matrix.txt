@@ -1,0 +1,33 @@
+Adjacency Matrix Representation of a Graph
+============================================
+
+Data Structures Used:
+- A tuple of tuples (matrix) where rows and columns represent vertices. matrix[i][j] stores the weight of the edge from vertex i to vertex j, or 0 if no edge exists.
+- Since tuples are immutable, every edge addition creates a new matrix by rebuilding the affected rows and the full matrix.
+
+How the Algorithm Works:
+1. create_matrix(n): Builds an n x n matrix filled with zeros. It constructs each row as a tuple of n zeros, then concatenates all rows into a tuple of tuples.
+2. add_edge(matrix, vertex_a, vertex_b, weight=1): Sets matrix[vertex_a][vertex_b] to the given weight. For an undirected graph, it also sets the mirror entry matrix[vertex_b][vertex_a]. Since tuples are immutable, it rebuilds the two affected rows and then rebuilds the entire matrix tuple with the updated rows.
+3. display_matrix(matrix): Prints the matrix row by row with row and column indices for readability.
+4. has_edge(matrix, vertex_a, vertex_b): Returns True if matrix[vertex_a][vertex_b] is non-zero, indicating an edge exists.
+5. get_neighbors(matrix, vertex): Iterates through the row for the given vertex and collects all column indices where the value is non-zero, returning them as a tuple.
+
+Key Operations:
+- Matrix creation: O(n^2) to initialize all zeros.
+- Edge addition: O(n) to rebuild each affected row (slicing and concatenation), plus O(n) to rebuild the full matrix = O(n) total.
+- Edge existence check: O(1) direct index access.
+- Neighbor lookup: O(n) scanning the entire row for non-zero entries.
+
+Time Complexity:
+- Creating the matrix: O(V^2) where V is the number of vertices.
+- Adding an edge: O(V) due to tuple rebuilding (slicing and concatenation).
+- Checking edge existence: O(1).
+- Finding all neighbors of a vertex: O(V) since the entire row must be scanned.
+
+Space Complexity:
+- O(V^2) regardless of the number of edges, since the full V x V matrix is stored.
+
+Use Case:
+- Efficient for dense graphs where the number of edges approaches V^2.
+- Edge existence checks are O(1), making it ideal when frequent edge lookups are needed.
+- Less space-efficient than adjacency lists for sparse graphs.

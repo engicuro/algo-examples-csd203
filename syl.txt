@@ -1,0 +1,240 @@
+	Course Introduction
+1.1. Using Arrays
+1.2. Singly Linked Lists	Offline	CLO1	IT	- Slides: Chapter 1
+Text book:- Chapter 5 page 184 - 224
+
+- Chapter 7 page 256-275	mat1	Read Chapter 1,5,7	
+2	1.3. Circularly Linked Lists
+1.4. Doubly Linked Lists	Offline	CLO1	IT	- Slides: Chapter 1
+Text book:- Chapter 5 page 184 - 224
+
+- Chapter 7 page 256-275		Read Chapter 1,5,7	
+3	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignment	Offline	CLO 1	U	slide chapter 1, 5, 7
+Lab 1: Lab1_st (.docx file)		Review Chapter 1, 5, 7
+Do Lab 1	
+4	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignment (cont.)	Offline	CLO 1	U	slide chapter 1, 5, 7
+Lab 1: Lab1_st (.docx file)		Review Chapter 1, 5, 7
+Do Lab 1	
+5	2.1 Stacks
+Guiding Exercises/Assignment	Offline	CLO 2	T
+U	- Slides: Chapter 6
+- Text book: Chapter 6 page 228-238		Read Chapter 6
+Do Lab 2	
+6	2.1 Stacks
+Guiding Exercises/Assignment (cont.)	Offline	CLO 2	T
+U	- Slides: Chapter 6
+- Text book: Chapter 6 page 228-238		Read Chapter 6
+Do Lab 2	
+7	2.2 Queues
+2.3 Double-Ended Queues (Deque)	Offline	CLO 2	T	- Slides: Chapter 6
+- Text book: Chapter 6 page 239-250		Read Chapter 6
+Do Lab 2	
+8	2.4 The Priority Queue	Offline	CLO 2	T	- Slides: Chapter 6
+- Text book: Chapter 6 page 239-250		Read Chapter 6
+Do Lab 2	
+9	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignment	Offline	CLO 2	U	- Slides: Chapter 6
+- Textbook
+- Lab 2: Lab2 (.docx file)		Review Chapter 6
+Do Lab 2	
+10	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignment (cont.)	Offline	CLO 2	U	- Slides: Chapter 6
+- Textbook
+- Lab 2: Lab2 (.docx file)		Review Chapter 6
+Do Lab 2	
+11	3.1 Illustrative Examples
+3.1.1 The Factorial Function
+3.1.2 Binary Search
+3.1.3 File Systems
+3.2 Analyzing Recursive Algorithms	Offline	CLO 3	T	- Slides: Chapter 4
+- Text book: Chapter 4 page 148 - 180		Read Chapter 4	
+12	3.3 Further Examples of Recursion
+3.3.1 Linear Recursion
+3.3.2 Binary Recursion
+3.3.3 Multiple Recursion
+3.4 Designing Recursive Algorithms
+3.5 Eliminating Tail Recursion	Offline	CLO 3	T	- Slides: Chapter 4
+- Text book: Chapter 4 page 148 - 180		Read Chapter 4	
+13	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignment	Offline	CLO 3	U	Lab 3: Lab3 (.docx file)		Do Lab 3	
+14	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignment (cont.)	Offline	CLO 3	U	Lab 3: Lab3 (.docx file)		Do Lab 3	
+15	4.1 General Trees
+4.1.1 Tree Definitions and Properties
+4.1.2 The Tree Abstract Data Type
+4.2 Binary Trees - . 317
+4.2.1 The Binary Tree Abstract Data Type
+4.2.2 Properties of Binary Trees	Offline	CLO 4	T	- Slides: Chapter 8
+- Text book: Chapter 8 page 300 - 310		Read Chapter 8	
+16	4.3 Implementing Trees
+4.4 Tree Traversal Algorithms	Offline	CLO 4	T	- Slides: Chapter 8
+- Text book: Chapter 8 page 300 - 310		Read Chapter 8	
+17	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignment	Offline	CLO 4	U	Lab 4: Lab4 (.docx file)
+- Text book: Chapter 8 page 300 - 310		Review Chapter 8
+Do Lab 4	
+18	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignment (cont.)	Offline	CLO 4	U	Lab 4: Lab4 (.docx file)
+- Text book: Chapter 8 page 300 - 310		Review Chapter 8
+Do Lab 4	
+19	4.5 Binary Search Trees
+4.5.1 Searching Within a Binary Search Tree	Offline	CLO 4	T	- Slides: Chapter 11
+- Text book: Chapter 11 page 460 - 473		Read Chapter 11	
+20	4.5.2 Insertions and Deletions	Offline	CLO 4	T	- Slides: Chapter 11
+- Text book: Chapter 11 page 460 - 473		Read Chapter 11	
+21	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignment	Offline	CLO 4	U	- slide chapter 11
+- Lab 4: Lab4 (.docx file)
+- Text book: Chapter 11 page 460 - 473		Review Chapter 11
+Do Lab 4	
+22	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignment (cont.)	Offline	CLO 4	U	- slide chapter 11
+- Lab 4: Lab4 (.docx file)
+- Text book: Chapter 11 page 460 - 473		Review Chapter 11
+Do Lab 4	
+23	4.6 Balanced Search Trees
+4.7 AVL Trees	Offline	CLO 4	T	- Slides: Chapter 11, 9
+- Chapter 11 page 475 - 488
+- Chapter 9 page 370 - 384		Read Chapter 9,11	
+24	4.8 Heaps	Offline	CLO 4	T	- Slides: Chapter 11, 9
+- Chapter 11 page 475 - 488
+- Chapter 9 page 370 - 384		Read Chapter 9,11	
+25	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignment	Offline	CLO 4	U	- Lab 4: Lab4 (.docx file)		Do Lab 4	
+26	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignment (cont.)	Offline	CLO 4	U	- Lab 4: Lab4 (.docx file)		Do Lab 4	
+27	Progress test 1 and review	Offline		U	- Content 1 - 4
+- Text book
+- Prgress test 1		Review Content 1 - 4
+Do Prgress test 1	
+28	Progress test 1 and review (cont.)	Offline		U	- Content 1 - 4
+- Text book
+- Prgress test 1		Review Content 1 - 4
+Do Prgress test 1	
+29	5.1 Graphs
+5.2 Data Structures for Graphs
+5.2.1 Edge List Structure
+5.2.2 Adjacency List Structure
+5.2.3 Adjacency Matrix Structure	Offline	CLO 5	T	- Slides: Chapter 14
+- Text book: Chapter 14 page 620 - 648		Read Chapter 14	
+30	5.3 Graph Traversals
+5.3.1 Depth-First Search
+5.3.3 Breadth-First Search	Offline	CLO 5	T	- Slides: Chapter 14
+- Text book: Chapter 14 page 620 - 648		Read Chapter 14	
+31	Progress test and/or Assignmen
+Review Exercises
+Guiding Exercises/Assignmen	Offline	CLO 5	U	- slide chapter 14
+- Lab 5: Lab5 (.docx file)
+- Assignment 1		Review Chapter 14
+Do Lab 5
+Do - Assignment 1	
+32	Progress test and/or Assignmen
+Review Exercises
+Guiding Exercises/Assignmen (cont.)	Offline	CLO 5	U	- slide chapter 14
+- Lab 5: Lab5 (.docx file)
+- Assignment 1		Review Chapter 14
+Do Lab 5
+Do - Assignment 1	
+33	5.4 Shortest Paths
+5.4.1 Weighted Graphs	Offline	CLO 5	T	- Slides: Chapter 14
+- Text book: Chapter 14 page 659 - 669		Read Chapter 14	
+34	5.4.2 Dijkstra’s Algorithm	Offline	CLO 5	T	- Slides: Chapter 14
+- Text book: Chapter 14 page 659 - 669		Read Chapter 14	
+35	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignmen	Offline	CLO 5	U	- slide chapter 14
+- Lab 5: Lab5 (.docx file)		Review Chapter 14
+Do Lab 5	
+36	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignmen (cont.)	Offline	CLO 5	U	- slide chapter 14
+- Lab 5: Lab5 (.docx file)		Review Chapter 14
+Do Lab 5	
+37	5.5 Minimum Spanning Trees
+5.5.1 Prim-Jarn´ık Algorithm
+5.5.2 Kruskal’s Algorithm	Offline	CLO 5	T	- Slides: Chapter 14
+- Text book: Chapter 14 page 670 - 685		Read Chapter 14	
+38	5.6. Euler's tour and Euler's cycle	Offline	CLO 5	T	- Slides: Chapter 14
+- Text book: Chapter 14 page 670 - 685		Read Chapter 14	
+39	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignmen	Offline	CLO 5	U	- slide chapter 14
+- Lab 5: Lab5 (.docx file)		Review Chapter 14
+Do Lab 5	
+40	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignmen (cont.)	Offline	CLO 5	U	- slide chapter 14
+- Lab 5: Lab5 (.docx file)		Review Chapter 14
+Do Lab 5	
+41	6.1 Selection-Sort
+6.2 Insertion-Sort	Offline	CLO 6	T	- Slides: Chapter 9, 12
+- Text book: Chapter 9 page 385 -386
+- Chapter 12 page 550 - 559		Read Chapter 9, 12	
+42	6.3 Bubble-sort
+6.4 Quick-Sort	Offline	CLO 6	T	- Slides: Chapter 9, 12
+- Text book: Chapter 9 page 385 -386
+- Chapter 12 page 550 - 559		Read Chapter 9, 12	
+43	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignmen	Offline	CLO 6	U	- slide chapter 9, 12
+- Lab 6: Lab6 (.docx file)		Review Chapter 9, 12
+Do Lab 6	
+44	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignmen (cont.)	Offline	CLO 6	U	- slide chapter 9, 12
+- Lab 6: Lab6 (.docx file)		Review Chapter 9, 12
+Do Lab 6	
+45	6.5 Merge-Sort
+6.6 Heap-Sort	Offline	CLO 6	T	- Slides: Chapter 9, 12
+- Text book: Chapter 9 page 370 -388
+- Text book: Chapter 12 page 538 - 547		Read Chapter 9, 12	
+46	6.7 Linear-Time Sorting: Bucket-Sort and Radix-Sort
+6.8 Comparing Sorting Algorithms	Offline	CLO 6	T	- Slides: Chapter 9, 12
+- Text book: Chapter 9 page 370 -388
+- Text book: Chapter 12 page 538 - 547		Read Chapter 9, 12	
+47	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignmen	Offline	CLO 6	U	- slide chapter 9, 12
+- Lab 6: Lab6 (.docx file)		Review Chapter 9, 12
+Do Lab 6	
+48	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignmen (cont.)	Offline	CLO 6	U	- slide chapter 9, 12
+- Lab 6: Lab6 (.docx file)		Review Chapter 9, 12
+Do Lab 6	
+49	7.1 Hash Tables
+7.2 Hash Functions
+7.3 Collision-Handling	Offline	CLO 7	T	- Slides: Chapter 10
+- Text book: Chapter 10 page 410 - 422		Read Chapter 10	
+50	7.4 Load Factors, Rehashing, and Efficiency
+7.5 Python Hash Table Implementation	Offline	CLO 7	T	- Slides: Chapter 10
+- Text book: Chapter 10 page 410 - 422		Read Chapter 10	
+51	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignmen	Offline	CLO 7	U	Lab 7: Lab7 (.docx file)		Do Lab 7	
+52	Progress test and/or
+Review Exercises
+Guiding Exercises/Assignmen (cont.)	Offline	CLO 7	U	Lab 7: Lab7 (.docx file)		Do Lab 7	
+53	8.1 Abundance of Digitized Text
+8.2 Pattern-Matching Algorithms
+8.2.1 Brute Force
+8.2.2 The Knuth-Morris-Pratt Algorithm	Offline	CLO 8	T	- Slides: Chapter 13
+- Text book: Chapter 13 page 581 -612		Read Chapter 13	
+54	8.3 Text Compression
+8.3.1 The Huffman Coding Algorithm
+8.3.2 The LZW Algorithm
+8.3.3 The Run-length Encoding Algorithm

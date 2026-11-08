@@ -1,0 +1,76 @@
+07_deque.py — Deque (Double-Ended Queue) Implementation
+=======================================================
+
+Data Structures Used:
+- Python tuples (immutable ordered sequences) are used to implement the deque.
+- No Python lists, no external libraries. The deque is a tuple that supports insertion
+  and removal at both ends (front and rear).
+
+How the Algorithm Works (Step by Step):
+
+Core Deque Operations (all built on tuples):
+
+1. deque_create(): Returns an empty tuple (). This is the initial empty deque.
+
+2. deque_add_front(dq, item):
+   - Inserts an item at the front (left side) of the deque.
+   - Creates a new tuple by prepending (item,) to the old tuple: (item,) + dq.
+   - Time: O(n) — all existing elements must be copied into the new tuple.
+
+3. deque_add_rear(dq, item):
+   - Inserts an item at the rear (right side) of the deque.
+   - Creates a new tuple by appending (item,) to the old tuple: dq + (item,).
+   - Time: O(n) — all existing elements must be copied.
+
+4. deque_remove_front(dq):
+   - Removes and returns the front item (first element).
+   - Uses dq[0] to get the front element and dq[1:] for the remaining deque.
+   - Returns (None, dq) if the deque is empty.
+   - Time: O(n) — slicing copies all but the first element.
+
+5. deque_remove_rear(dq):
+   - Removes and returns the rear item (last element).
+   - Uses dq[-1] to get the rear element and dq[:-1] for the remaining deque.
+   - Returns (None, dq) if the deque is empty.
+   - Time: O(n) — slicing copies all but the last element.
+
+6. deque_peek_front(dq) / deque_peek_rear(dq):
+   - Return the front/rear element without removing it (dq[0] or dq[-1]).
+   - Return None if the deque is empty.
+   - Time: O(1).
+
+7. deque_is_empty(dq):
+   - Returns True if len(dq) == 0.
+   - Time: O(1).
+
+8. deque_size(dq):
+   - Returns len(dq).
+   - Time: O(1).
+
+Example 1 — Palindrome Checker (is_palindrome):
+- Checks whether a string reads the same forwards and backwards.
+- Algorithm:
+  a. Clean the input: remove non-alphanumeric characters and convert to lowercase.
+  b. Enqueue every character of the cleaned string into the deque (at the rear).
+  c. Repeatedly remove one character from the front AND one from the rear, comparing them.
+  d. If any pair does not match, return False (not a palindrome).
+  e. If all pairs match (or the deque has 0 or 1 characters left), return True.
+- Time: O(n) where n is the length of the input string.
+- Space: O(n) for the deque.
+
+Example 2 — Deque Used as Stack and Queue:
+- As a stack (LIFO): use add_rear and remove_rear (push/pop from the same end).
+- As a queue (FIFO): use add_rear and remove_front (enqueue at rear, dequeue from front).
+- This demonstrates the deque's flexibility — it can emulate both stack and queue behavior.
+
+Key Operations Summary:
+- Add front: O(n) due to tuple prepending
+- Add rear: O(n) due to tuple appending
+- Remove front: O(n) due to tuple slicing
+- Remove rear: O(n) due to tuple slicing
+- Peek front/rear: O(1)
+- Is Empty: O(1)
+- Size: O(1)
+
+Time Complexity: O(n) for all insertion/removal operations (tuple copy); O(1) for peek/empty/size
+Space Complexity: O(n) for the tuple storage

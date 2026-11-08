@@ -1,0 +1,69 @@
+Graph Basics
+
+Data Structures Used:
+- A graph is represented as a Python dictionary (adjacency list representation).
+  - Each KEY is a vertex (a string name).
+  - Each VALUE is a TUPLE of neighbors (the vertices it connects to).
+- For weighted graphs, each neighbor is stored as a two-element tuple: (neighbor_name, weight).
+- Vertices and edges are stored using tuples (immutable sequences) — no lists are used.
+
+How the Algorithm Works:
+
+1. GRAPH CONCEPTS (explained in comments):
+   - A graph consists of vertices (nodes) and edges (connections between vertices).
+   - Undirected graph: edges go both ways (A -- B means you can travel A -> B and B -> A).
+   - Directed graph (digraph): edges go one way only (A -> B means you can only travel from A to B).
+   - Unweighted graph: all edges are treated equally (no cost associated).
+   - Weighted graph: each edge has a number (weight) representing cost, distance, time, etc.
+
+2. CREATE EMPTY GRAPH:
+   - Returns an empty dictionary {}.
+
+3. ADD VERTEX:
+   - Checks if the vertex name already exists as a key in the dictionary.
+   - If not, adds it with an empty tuple as its value (no neighbors yet).
+   - If it already exists, prints a message and does nothing.
+
+4. ADD EDGE (undirected, unweighted):
+   - Ensures both vertices exist (adds them if they don't).
+   - Appends to_vertex to from_vertex's neighbor tuple (if not already present).
+   - Appends from_vertex to to_vertex's neighbor tuple (undirected = both directions).
+   - Uses tuple concatenation to create new tuples (since tuples are immutable).
+
+5. ADD DIRECTED EDGE:
+   - Similar to add_edge, but only adds to_vertex to from_vertex's neighbor tuple.
+   - Does NOT add the reverse edge (from_vertex to to_vertex's tuple).
+
+6. ADD WEIGHTED EDGE (undirected):
+   - Each neighbor is stored as a two-element tuple: (neighbor_name, weight).
+   - Appends (to_vertex, weight) to from_vertex's tuple and (from_vertex, weight) to to_vertex's tuple.
+
+7. DISPLAY GRAPH:
+   - Iterates over all vertices in the dictionary and prints each vertex with its neighbors.
+
+8. GET NEIGHBORS:
+   - Returns the tuple of neighbors for a given vertex.
+   - Returns an empty tuple and prints a message if the vertex is not found.
+
+9. HAS EDGE:
+   - Checks if vertex_b is in vertex_a's neighbor tuple.
+   - Returns True if the edge exists, False otherwise.
+
+10. COUNT VERTICES:
+    - Returns len(graph) — the number of keys in the dictionary.
+
+11. COUNT EDGES:
+    - Sums up the length of every vertex's neighbor tuple.
+    - Divides by 2 because each undirected edge is stored twice (once for each endpoint).
+
+Key Operations and Complexity:
+- add_vertex: O(1) average (dictionary insertion).
+- add_edge: O(n) worst case for the "not in" check on the neighbor tuple (linear scan), where n is the number of neighbors.
+- get_neighbors: O(1) average (dictionary lookup).
+- has_edge: O(n) worst case (linear scan of neighbor tuple).
+- count_vertices: O(1).
+- count_edges: O(V + E) where V is the number of vertices and E is the number of edges (iterates over all vertices and sums neighbor counts).
+- display_graph: O(V + E) — visits every vertex and every neighbor.
+
+Space Complexity:
+- O(V + E) for storing the graph, where V is the number of vertices and E is the number of edges.

@@ -1,0 +1,38 @@
+Insertion Sort
+==============
+
+Data Structures Used:
+- Tuples (immutable). Since tuples cannot be modified in place, the algorithm
+  creates new tuples at each step using helper functions _tuple_swap and
+  _tuple_set that produce new tuples with elements swapped or set at a given
+  index.
+
+How the Algorithm Works (Step by Step):
+1. Start with the second element (index 1). The first element is trivially
+   sorted by itself.
+2. For each element at index i (the "key"), compare it with the elements to
+   its left (indices i-1, i-2, ...).
+3. If the element to the left is larger than the key, shift that element one
+   position to the right (by creating a new tuple with the element moved).
+4. Continue shifting left until either reaching the beginning of the tuple or
+   finding an element that is not larger than the key.
+5. Place the key into its correct position (the gap left by the shifting).
+6. Print the tuple after each insertion step so the progress is visible.
+
+Key Operations:
+- Comparisons: each time two elements are compared to decide whether to shift.
+- Shifts/Swaps: each time an element is moved one position to the right to make
+  room for the key.
+- The algorithm builds the sorted portion of the tuple incrementally from left
+  to right.
+
+Time Complexity:
+- Best case: O(n) — when the tuple is already sorted; each element is compared
+  once and no shifts are needed.
+- Worst case: O(n^2) — when the tuple is sorted in reverse order; each element
+  must be compared with and shifted past all previously sorted elements.
+- Average case: O(n^2).
+
+Space Complexity:
+- O(n) — because tuples are immutable, each modification creates a new tuple.
+  The algorithm does not sort in place.

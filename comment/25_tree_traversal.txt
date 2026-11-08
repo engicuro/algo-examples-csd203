@@ -1,0 +1,60 @@
+Tree Traversal: BFS and DFS
+
+Data Structures Used:
+- A Node class with three fields: value, left (pointer to left child), and right (pointer to right child).
+- A tuple is used as a queue for BFS (with an index pointer to avoid O(n) pop(0) operations).
+- No auxiliary data structures are needed for the DFS traversals beyond the recursion stack.
+
+How the Algorithm Works:
+
+1. BFS (Breadth-First Search) / Level-Order Traversal:
+   - Visits nodes level by level, from top to bottom, left to right.
+   - Uses a tuple as a queue and an integer front index pointer.
+   - Steps:
+     a) Put the root in the queue.
+     b) While front < len(queue):
+        - Take the node at queue[front] and increment front.
+        - Process (print) that node's value.
+        - Append the left child to the queue (if it exists).
+        - Append the right child to the queue (if it exists).
+   - Why use an index pointer instead of pop(0)?
+     - pop(0) on a list is O(n) because all remaining elements must shift left.
+     - Using an index pointer to "consume" elements is O(1) per step.
+   - Time complexity: O(n) — every node is visited exactly once.
+   - Space complexity: O(n) for the queue (in the worst case, the last level of a complete binary tree has about n/2 nodes).
+
+2. DFS INORDER TRAVERSAL (left, root, right):
+   - Recursively traverse the left subtree first.
+   - Visit (print) the current node's value.
+   - Recursively traverse the right subtree.
+   - For a Binary Search Tree, this visits values in sorted (ascending) order.
+   - Time complexity: O(n). Space complexity: O(h) for the recursion stack (h = height of tree).
+
+3. DFS PREORDER TRAVERSAL (root, left, right):
+   - Visit (print) the current node's value first.
+   - Recursively traverse the left subtree.
+   - Recursively traverse the right subtree.
+   - Preorder is useful for creating a copy of the tree or for prefix expression evaluation.
+   - Time complexity: O(n). Space complexity: O(h).
+
+4. DFS POSTORDER TRAVERSAL (left, right, root):
+   - Recursively traverse the left subtree first.
+   - Recursively traverse the right subtree.
+   - Visit (print) the current node's value last.
+   - Postorder is useful for deleting a tree (delete children before parent) or for postfix expression evaluation.
+   - Time complexity: O(n). Space complexity: O(h).
+
+5. BFS WITH LEVEL TRACKING:
+   - An extension of BFS that tracks which level each node belongs to.
+   - Uses a level_count variable to track how many nodes are at the current level.
+   - For each level, processes all nodes at that level, adding their children to the queue for the next level.
+   - Prints nodes grouped by level.
+
+Key Operations Summary:
+- bfs_level_order: O(n) time, O(n) space.
+- dfs_inorder: O(n) time, O(h) space.
+- dfs_preorder: O(n) time, O(h) space.
+- dfs_postorder: O(n) time, O(h) space.
+- bfs_with_level_tracking: O(n) time, O(n) space.
+
+Where n = total number of nodes, h = height of the tree (O(log n) for balanced trees, O(n) for skewed trees).

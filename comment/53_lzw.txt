@@ -1,0 +1,100 @@
+LZW (Lempel-Ziv-Welch) Compression
+====================================
+
+LZW is a dictionary-based compression algorithm. It works by
+building a dictionary of substrings as it reads the input,
+then replacing repeated substrings with short codes.
+
+This file explains the mechanism demonstrated in 53_lzw.py.
+
+Mechanism
+---------
+
+Encoding Phase:
+---------------
+1. Initialize the dictionary with all single ASCII characters
+   (codes 0-255). Each character maps to its ASCII code.
+2. Set current string to empty.
+3. Read characters one at a time from the input:
+   a. Form the combined string: current + next character.
+   b. If the combined string is in the dictionary:
+      - Extend the current string to the combined string.
+      - Continue reading the next character.
+   c. If the combined string is NOT in the dictionary:
+      - Output the code for the current string.
+      - Add the combined string to the dictionary with the
+        next available code number.
+      - Start a new current string with just the next character.
+4. After all input is processed, output the code for the
+   remaining current string (if non-empty).
+
+Key insight: The algorithm builds the dictionary on the fly
+as it reads the input. It doesn't need to transmit the
+dictionary to the decoder because the decoder builds it the
+same way.
+
+Decoding Phase:
+---------------
+1. Rebuild the initial ASCII dictionary (codes 0-255 →
+   single characters).
+2. Read codes one at a time from the encoded data:
+   a. Look up each code in the dictionary to get the
+      corresponding string.
+   b. Add the decoded string to the output.
+   c. If this is not the first code, add a new entry to
+      the dictionary: prev_string + first character of
+      current string.
+   d. Special case: if a code is not yet in the dictionary
+      (which happens when a pattern is immediately repeated),
+      the string is prev_string + prev_string[0].
+
+Data structures used:
+- A dictionary (hash map) mapping strings to integer codes
+  (for encoding) and integer codes to strings (for decoding).
+- Integer variable tracking the next available code number
+  (starts at 256 for ASCII).
+- String variables for the current string and previous string.
+
+Key operations:
+- Dictionary lookup: check if a string/code exists in the dict.
+- Dictionary insertion: add new string/code pairs as patterns
+  are discovered.
+- String concatenation: build combined strings and decode
+  output.
+
+Time complexity:
+- Encoding: O(n) where n = length of input text. Each
+  character is processed once, and dictionary operations
+  are O(1) on average.
+- Decoding: O(n) where n = number of codes. Each code is
+  processed once.
+- Overall: O(n) linear time.
+
+Space complexity:
+- O(d) where d = dictionary size. The dictionary grows as
+  new substrings are discovered. In practice, it is bounded
+  by the maximum code value (e.g., 4096 for 12-bit codes).
+- O(n) for the input/output strings.
+
+Example walkthrough (encoding "ABABABA"):
+- Initial dict: A=65, B=66 (ASCII codes)
+- Read 'A': current="A". Next 'B': "AB" not in dict →
+  output code 65 (A), add "AB"=256, current="B"
+- Read 'A': current="B". Next 'B': "BA" not in dict →
+  output code 66 (B), add "BA"=257, current="B"
+- Read 'A': current="B". Next 'A': "BA" IS in dict (257) →
+  current="BA"
+- Read end of input: output code 257 (BA)
+- Encoded: (65, 66, 257)
+
+Why LZW is effective:
+- Repeated substrings are replaced with single codes.
+- The dictionary grows as the input is processed, so longer
+  and more frequent patterns get shorter representations.
+- No need to transmit the dictionary — the decoder rebuilds
+  it identically.
+
+Applications:
+- GIF image format
+- UNIX compress command
+- TIFF image format

@@ -1,0 +1,39 @@
+11_recursion_file_system.py - Mechanism Explanation
+
+Data Structures Used:
+- File system directory tree (hierarchical structure of files and directories).
+- Strings representing file/directory paths.
+- Tuples (from os.listdir) for directory entries.
+- A tuple (file_count, dir_count) as the return value for counting.
+
+Algorithm Overview:
+This script uses recursion to traverse a file system directory tree. Since directories can contain nested subdirectories to arbitrary depth, recursion is a natural fit: each directory is processed by listing its contents and recursing into each subdirectory.
+
+Step-by-Step Mechanism (list_files):
+1. Check if the path exists. If not, print a "not found" message and return.
+2. Base Case - File: If the path is a file (os.path.isfile), print its name with indentation and return.
+3. Recursive Case - Directory: If the path is a directory, print its name with indentation.
+4. List all entries in the directory using os.listdir.
+5. Sort the entries for predictable output.
+6. For each entry, construct the full path using os.path.join and recursively call list_files with increased indentation (indent + 2).
+
+Step-by-Step Mechanism (count_files_and_dirs):
+1. Base Case - File: If the path is a file, return (1, 0) — one file, zero directories.
+2. Base Case - Neither file nor directory (e.g., broken link): return (0, 0).
+3. Recursive Case - Directory: Initialize file_count = 0, dir_count = 0.
+4. List entries in the directory. For each entry, recursively call count_files_and_dirs and add the returned counts to the accumulators.
+5. After processing all entries, increment dir_count by 1 to count the current directory itself.
+6. Return the tuple (file_count, dir_count).
+
+Key Operations:
+- os.path.exists, os.path.isfile, os.path.isdir for type checking.
+- os.listdir to enumerate directory contents.
+- os.path.join to construct full paths from parent and child names.
+- Recursive descent with indentation to visualize tree depth.
+- Tuple accumulation for counting files and directories.
+
+Time Complexity:
+- O(n) where n is the total number of files and directories. Each entry is visited exactly once.
+
+Space Complexity:
+- O(d) where d is the maximum depth of the directory tree, due to the recursive call stack.

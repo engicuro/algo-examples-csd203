@@ -1,0 +1,101 @@
+KMP (Knuth-Morris-Pratt) Pattern Matching
+===========================================
+
+The KMP algorithm searches for a pattern in a text efficiently
+by avoiding unnecessary comparisons.
+
+Key idea:
+When a mismatch occurs, KMP uses information from the pattern
+itself to skip ahead. It knows how much of the pattern we
+have already matched, so it doesn't go back in the text.
+
+This file explains the mechanism demonstrated in 51_kmp.py.
+
+The algorithm works in two phases:
+
+Phase 1 — Build the Failure Function (Partial Match Table)
+-----------------------------------------------------------
+The failure function (also called the prefix function) tells
+us: if we mismatch at position j in the pattern, where should
+we resume matching in the pattern?
+
+Mechanism of building the failure function:
+1. Initialize failure[0] = 0 (a single character has no proper
+   prefix that is also a suffix).
+2. Use two pointers: i (current position in pattern, starting
+   at 1) and j (length of the current matching prefix, starting
+   at 0).
+3. For each position i:
+   - If pattern[i] == pattern[j]: characters match, extend the
+     prefix. Set j = j + 1, failure[i] = j, advance i.
+   - If pattern[i] != pattern[j] and j > 0: mismatch. Fall
+     back to the previous best prefix by setting j = failure[j - 1].
+     Do NOT advance i; try again with the shorter prefix.
+   - If pattern[i] != pattern[j] and j == 0: no prefix to fall
+     back to. Set failure[i] = 0, advance i.
+
+What failure[j] means:
+- failure[j] is the length of the longest proper prefix of
+  pattern[0..j] that is also a suffix of that substring.
+- Example: pattern = "ABABC"
+  - failure[0] = 0 ("A" has no proper prefix/suffix)
+  - failure[1] = 0 ("AB" — no prefix is also a suffix)
+  - failure[2] = 1 ("ABA" — "A" is both prefix and suffix)
+  - failure[3] = 2 ("ABAB" — "AB" is both prefix and suffix)
+  - failure[4] = 0 ("ABABC" — no prefix is also a suffix)
+
+Phase 2 — Search the Text
+--------------------------
+The search uses the failure function to scan the text in one
+pass without backtracking.
+
+Mechanism:
+1. Initialize two pointers: i (position in text, starting at 0)
+   and j (position in pattern, starting at 0).
+2. While i < len(text):
+   - If text[i] == pattern[j]: characters match. Advance both
+     i and j.
+     - If j == len(pattern): full pattern matched! Record the
+       starting position (i - j). Then use the failure function
+       to resume: set j = failure[j - 1] to continue searching
+       for more matches.
+   - If text[i] != pattern[j]: mismatch.
+     - If j > 0: use the failure function to skip ahead in the
+       pattern. Set j = failure[j - 1]. Do NOT move i back —
+       this is the key advantage of KMP!
+     - If j == 0: no prefix to reuse. Just advance i to the
+       next character in the text.
+
+Data structures used:
+- A dictionary (or array) for the failure function mapping
+  each pattern position to the fallback position.
+- Strings for the text and pattern.
+- A tuple to store starting positions of all matches.
+
+Key operations:
+- Failure function computation: compares pattern characters
+  with themselves using two pointers and fallback logic.
+- Text scanning: compares text and pattern characters, using
+  the failure function to skip ahead on mismatch without
+  backtracking in the text.
+
+Time complexity:
+- Building failure function: O(m) where m = len(pattern).
+  Each character is visited at most twice (advance and fallback).
+- Searching text: O(n) where n = len(text). The text pointer i
+  never moves backward.
+- Total: O(n + m), which is much faster than brute force
+  O(n * m) for long texts.
+
+Space complexity:
+- O(m) for the failure function dictionary.
+- O(1) additional space for the search phase (excluding output).
+
+Why KMP is better than brute force:
+- Brute force re-examines text characters after a mismatch by
+  moving the text pointer backward.
+- KMP never moves the text pointer backward. On a mismatch,
+  it uses the failure function to determine the next position
+  in the pattern to try, leveraging the fact that some
+  characters at the beginning of the pattern may already
+  match the current position in the text.

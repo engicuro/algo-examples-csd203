@@ -1,0 +1,58 @@
+Sorting Algorithm Comparison
+============================
+
+Data Structures Used:
+- Tuples (immutable). All sorting algorithms in this file operate on tuples
+  and create new tuples at each modification step using _tuple_swap and
+  _tuple_set helper functions.
+- A results tuple stores the comparison outcomes (algorithm name, comparison
+  count, swap count) for each algorithm.
+
+How the Algorithm Works (Step by Step):
+This file does not implement a single algorithm. Instead, it provides
+implementations of eight different sorting algorithms and runs them all on
+the same input data, then prints a comparison table.
+
+The eight algorithms implemented are:
+1. Selection Sort: Repeatedly find the minimum element from the unsorted
+   portion and swap it into its correct position at the front.
+2. Insertion Sort: Pick each element and shift it left into the sorted
+   portion until it is in the correct position.
+3. Bubble Sort: Repeatedly compare adjacent elements and swap them if out
+   of order, with early termination if no swaps occur in a pass.
+4. Quick Sort: Pick a pivot, partition elements around it, then recursively
+   sort each partition.
+5. Merge Sort: Split the tuple in half, recursively sort each half, then
+   merge the two sorted halves.
+6. Heap Sort: Build a max heap, then repeatedly extract the maximum element
+   and restore the heap property.
+7. Bucket Sort: Distribute elements into value-based buckets, sort each
+   bucket with insertion sort, then concatenate.
+8. Radix Sort: Sort elements digit by digit from least significant to most
+   significant using a counting sort subroutine for each digit position.
+
+The main block runs each algorithm on the same original data tuple (with a
+fresh copy for each), collects the comparison and swap counts, and prints a
+formatted comparison table showing all results side by side.
+
+Key Operations:
+- Comparisons: counted differently by each algorithm (element comparisons,
+  digit extractions, etc.).
+- Swaps: counted differently by each algorithm (actual swaps, shifts, or
+  moves depending on the algorithm).
+- The comparison table allows direct performance comparison across algorithms
+  on the same input.
+
+Time Complexity (per algorithm):
+- Selection Sort: O(n^2) in all cases.
+- Insertion Sort: O(n) best, O(n^2) worst/average.
+- Bubble Sort: O(n) best (with early termination), O(n^2) worst/average.
+- Quick Sort: O(n log n) average, O(n^2) worst.
+- Merge Sort: O(n log n) in all cases.
+- Heap Sort: O(n log n) in all cases.
+- Bucket Sort: O(n + k) average, O(n^2) worst.
+- Radix Sort: O(d * (n + k)) in all cases.
+
+Space Complexity:
+- O(n) or more for all algorithms due to tuple immutability (new tuples
+  created at each modification).

@@ -1,0 +1,43 @@
+Depth-First Search (DFS)
+========================
+
+Data Structures Used:
+- A dictionary (graph) mapping each vertex to a tuple of its neighbors (adjacency list).
+- A set (visited) to track which vertices have already been visited.
+- A tuple (order) to record the visit order in the collecting variant.
+- The call stack (implicit via recursion) for the recursive DFS variant.
+
+How the Algorithm Works:
+1. dfs_recursive(graph, start_vertex, visited):
+   - Marks the current vertex as visited by adding it to the visited set.
+   - Prints the current vertex.
+   - Iterates over all neighbors of the current vertex. For each unvisited neighbor, it recursively calls itself.
+   - This causes the algorithm to go as deep as possible down one path before backtracking.
+
+2. dfs_collect(graph, start_vertex, visited, order):
+   - Same logic as dfs_recursive, but instead of printing, it appends each visited vertex to the order tuple.
+   - Returns the updated order tuple after all reachable vertices have been visited.
+
+3. find_connected_components(graph):
+   - Initializes an empty visited set and an empty components tuple.
+   - Iterates over every vertex in the graph. If a vertex has not been visited, it starts a new DFS from that vertex using dfs_collect.
+   - Each DFS call discovers one connected component (a group of vertices where every vertex can reach every other vertex in the group).
+   - The discovered component is added to the components tuple.
+   - Returns a tuple of all connected components.
+
+Key Operations:
+- Marking a vertex as visited: O(1) set addition.
+- Checking if a vertex is visited: O(1) set membership test.
+- Iterating over neighbors: O(d) where d is the degree of the current vertex.
+- Recursive exploration: follows edges to unvisited neighbors, backtracking when no unvisited neighbors remain.
+
+Time Complexity:
+- O(V + E) where V is the number of vertices and E is the number of edges. Each vertex is visited once, and each edge is examined once (in each direction for undirected graphs).
+
+Space Complexity:
+- O(V) for the visited set and the recursion call stack (in the worst case, the stack depth equals the number of vertices for a path graph).
+
+Use Case:
+- Traversing or searching a graph to discover all reachable vertices from a starting point.
+- Finding connected components in an undirected graph.
+- Detecting cycles, topological sorting, and solving maze-like problems.
